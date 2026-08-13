@@ -1,0 +1,584 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>HSK1 – Làm quen và giới thiệu</title>
+<script src="https://cdn.jsdelivr.net/npm/hanzi-writer@3.7/dist/hanzi-writer.min.js"></script>
+<style>
+:root{--ink:#24324a;--primary:#7b61ff;--secondary:#ff8a65;--bg:#f7f8ff;--card:#fff;--ok:#1f9d72;--shadow:0 10px 28px rgba(51,52,85,.12)}
+*{box-sizing:border-box} body{margin:0;background:linear-gradient(180deg,#f4f2ff,#fff8f3);color:var(--ink);font-family:"Times New Roman",Times,serif;line-height:1.55}
+.zh,.han,.sentence{font-family:KaiTi,"STKaiti","Kaiti SC","Songti SC",serif}
+.pinyin{font-family:"STHeiti","Heiti SC","PingFang SC",sans-serif;font-size:1.25rem;color:var(--primary);font-weight:700}
+header{padding:52px 20px 38px;text-align:center;background:radial-gradient(circle at top,#dcd5ff 0,#f9f8ff 56%,transparent 57%)}
+header h1{margin:0;font-size:clamp(2rem,5vw,3.5rem)} header p{max-width:760px;margin:10px auto 0;color:#59647a}
+nav{position:sticky;top:0;z-index:20;display:flex;gap:8px;justify-content:center;flex-wrap:wrap;padding:10px;background:rgba(255,255,255,.88);backdrop-filter:blur(12px);box-shadow:0 4px 18px rgba(0,0,0,.06)}
+nav a{text-decoration:none;color:var(--ink);font-weight:700;padding:8px 13px;border-radius:999px;background:#f0edff}
+main{max-width:1180px;margin:auto;padding:28px 18px 70px} section{margin:34px 0} h2{font-size:1.8rem;margin-bottom:8px} .lead{margin-top:0;color:#687187}
+.flash-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:16px}
+.flashcard{height:260px;perspective:1000px;cursor:pointer;outline:none} .flash-inner{position:relative;width:100%;height:100%;transition:.65s;transform-style:preserve-3d}
+.flashcard.flipped .flash-inner{transform:rotateY(180deg)} .flash-front,.flash-back{position:absolute;inset:0;backface-visibility:hidden;border-radius:24px;background:var(--card);box-shadow:var(--shadow);display:flex;flex-direction:column;align-items:center;justify-content:center;padding:18px;text-align:center;border:1px solid #eeeaff}
+.flash-back{transform:rotateY(180deg);background:linear-gradient(145deg,#fff,#f1edff)} .emoji{font-size:4rem} .han{font-size:2.5rem;font-weight:700} .han.small{font-size:2rem} .meaning{font-size:1.1rem;margin:4px 0 12px} .tap{font-size:.87rem;color:#8a91a2;margin-top:10px}
+button{font:inherit} .speak,.reveal-btn,.primary-btn{border:0;border-radius:12px;padding:9px 13px;background:var(--primary);color:#fff;font-weight:700;cursor:pointer} .speak:hover,.reveal-btn:hover,.primary-btn:hover{filter:brightness(.94)}
+.table-wrap{overflow:auto;border-radius:18px;box-shadow:var(--shadow);background:#fff} table{width:100%;border-collapse:collapse;min-width:980px} th{background:#6651d9;color:#fff} th,td{padding:12px;border-bottom:1px solid #ececf5;text-align:left;vertical-align:top} tr:hover td{background:#faf9ff} .emoji-sm{font-size:1.7rem;margin-right:7px} .muted{color:#687187;font-size:.92rem}
+.icon-btn{border:0;background:#eeeaff;border-radius:10px;padding:7px 9px;cursor:pointer;margin:2px}
+.stroke-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px} .stroke-card{background:#fff;border-radius:20px;padding:16px;box-shadow:var(--shadow)} .stroke-title{display:flex;align-items:center;justify-content:space-between;gap:8px} .stroke-chars{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0} .char-box{width:90px;height:90px;background:linear-gradient(90deg,transparent 49%,#eadffc 50%,transparent 51%),linear-gradient(transparent 49%,#eadffc 50%,transparent 51%);border:1px solid #d9d0f7}
+.grammar-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px} .grammar-card{background:#fff;border-left:6px solid var(--secondary);padding:18px;border-radius:18px;box-shadow:var(--shadow)} .grammar-card h3{margin-top:0;color:#5d48cf} .example-box{display:grid;grid-template-columns:1fr auto;gap:4px 8px;background:#fff5ef;border-radius:13px;padding:12px} .example-box span{grid-column:1/2;color:#6d7483}
+.activities{display:grid;grid-template-columns:1fr 1fr;gap:18px} .activity{background:#fff;padding:20px;border-radius:22px;box-shadow:var(--shadow)} .match-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px} .match-item{border:2px solid #ded8ff;background:#faf9ff;border-radius:12px;padding:11px;cursor:pointer;text-align:center} .match-item.selected{border-color:var(--primary);background:#eeeaff} .match-item.matched{border-color:var(--ok);background:#eaf9f3;opacity:.7;pointer-events:none} .feedback{min-height:28px;font-weight:700;margin-top:10px}
+.order-area{display:flex;flex-wrap:wrap;gap:8px;min-height:52px;padding:10px;border:2px dashed #d7d1f0;border-radius:14px;margin:10px 0} .token{border:0;background:#edeaff;padding:9px 12px;border-radius:10px;cursor:pointer} .token.used{opacity:.35}
+.sentence-list{display:grid;gap:12px} .sentence-card{background:#fff;padding:16px;border-radius:18px;box-shadow:var(--shadow)} .sentence-main{display:flex;align-items:center;justify-content:space-between;gap:12px} .sentence{font-size:1.5rem;font-weight:700} .sentence-detail{display:none;margin-top:10px;padding:11px;border-radius:12px;background:#f4f1ff;color:#59647a} .sentence-detail.show{display:block} .reveal-btn{margin-top:10px;background:#ff8a65}
+.note{background:#fff6cc;border-left:5px solid #f0bd3d;padding:14px;border-radius:12px} footer{text-align:center;padding:30px;color:#788094}
+@media(max-width:760px){.activities{grid-template-columns:1fr} header{padding-top:34px}}
+</style>
+</head>
+<body>
+<header><h1>HSK1 · 认识新朋友</h1><p>Bài học tương tác: từ vựng, phát âm, thứ tự nét, ngữ pháp và mẫu câu giới thiệu bản thân.</p></header>
+<nav><a href="#vocab">Từ vựng</a><a href="#stroke">笔顺</a><a href="#practice">Luyện tập</a><a href="#grammar">Ngữ pháp</a><a href="#patterns">Mẫu câu</a></nav>
+<main>
+<section id="vocab"><h2>Phần 1 · Từ đã học</h2><p class="lead">Chạm vào thẻ để lật. Nút 🔊 sử dụng giọng đọc tiếng Trung có sẵn trên trình duyệt.</p>
+<div class="flash-grid">
+<article class="flashcard" tabindex="0" onclick="this.classList.toggle('flipped')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();this.classList.toggle('flipped')}">
+  <div class="flash-inner">
+    <div class="flash-front">
+      <div class="emoji">👭</div>
+      <div class="han">朋友</div>
+      <div class="tap">Chạm để xem pinyin và nghĩa</div>
+    </div>
+    <div class="flash-back">
+      <div class="han small">朋友</div>
+      <div class="pinyin">péngyou</div>
+      <div class="meaning">bạn bè</div>
+      <button class="speak" onclick="event.stopPropagation();speak('朋友')">🔊 Nghe từ</button>
+    </div>
+  </div>
+</article>
+
+<article class="flashcard" tabindex="0" onclick="this.classList.toggle('flipped')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();this.classList.toggle('flipped')}">
+  <div class="flash-inner">
+    <div class="flash-front">
+      <div class="emoji">🐶</div>
+      <div class="han">狗</div>
+      <div class="tap">Chạm để xem pinyin và nghĩa</div>
+    </div>
+    <div class="flash-back">
+      <div class="han small">狗</div>
+      <div class="pinyin">gǒu</div>
+      <div class="meaning">con chó</div>
+      <button class="speak" onclick="event.stopPropagation();speak('狗')">🔊 Nghe từ</button>
+    </div>
+  </div>
+</article>
+
+<article class="flashcard" tabindex="0" onclick="this.classList.toggle('flipped')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();this.classList.toggle('flipped')}">
+  <div class="flash-inner">
+    <div class="flash-front">
+      <div class="emoji">📱</div>
+      <div class="han">手机</div>
+      <div class="tap">Chạm để xem pinyin và nghĩa</div>
+    </div>
+    <div class="flash-back">
+      <div class="han small">手机</div>
+      <div class="pinyin">shǒujī</div>
+      <div class="meaning">điện thoại di động</div>
+      <button class="speak" onclick="event.stopPropagation();speak('手机')">🔊 Nghe từ</button>
+    </div>
+  </div>
+</article>
+
+<article class="flashcard" tabindex="0" onclick="this.classList.toggle('flipped')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();this.classList.toggle('flipped')}">
+  <div class="flash-inner">
+    <div class="flash-front">
+      <div class="emoji">🇨🇳</div>
+      <div class="han">中国</div>
+      <div class="tap">Chạm để xem pinyin và nghĩa</div>
+    </div>
+    <div class="flash-back">
+      <div class="han small">中国</div>
+      <div class="pinyin">Zhōngguó</div>
+      <div class="meaning">Trung Quốc</div>
+      <button class="speak" onclick="event.stopPropagation();speak('中国')">🔊 Nghe từ</button>
+    </div>
+  </div>
+</article>
+
+<article class="flashcard" tabindex="0" onclick="this.classList.toggle('flipped')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();this.classList.toggle('flipped')}">
+  <div class="flash-inner">
+    <div class="flash-front">
+      <div class="emoji">🇯🇵</div>
+      <div class="han">日本</div>
+      <div class="tap">Chạm để xem pinyin và nghĩa</div>
+    </div>
+    <div class="flash-back">
+      <div class="han small">日本</div>
+      <div class="pinyin">Rìběn</div>
+      <div class="meaning">Nhật Bản</div>
+      <button class="speak" onclick="event.stopPropagation();speak('日本')">🔊 Nghe từ</button>
+    </div>
+  </div>
+</article>
+
+<article class="flashcard" tabindex="0" onclick="this.classList.toggle('flipped')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();this.classList.toggle('flipped')}">
+  <div class="flash-inner">
+    <div class="flash-front">
+      <div class="emoji">🇻🇳</div>
+      <div class="han">越南</div>
+      <div class="tap">Chạm để xem pinyin và nghĩa</div>
+    </div>
+    <div class="flash-back">
+      <div class="han small">越南</div>
+      <div class="pinyin">Yuènán</div>
+      <div class="meaning">Việt Nam</div>
+      <button class="speak" onclick="event.stopPropagation();speak('越南')">🔊 Nghe từ</button>
+    </div>
+  </div>
+</article>
+
+<article class="flashcard" tabindex="0" onclick="this.classList.toggle('flipped')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();this.classList.toggle('flipped')}">
+  <div class="flash-inner">
+    <div class="flash-front">
+      <div class="emoji">📚</div>
+      <div class="han">书</div>
+      <div class="tap">Chạm để xem pinyin và nghĩa</div>
+    </div>
+    <div class="flash-back">
+      <div class="han small">书</div>
+      <div class="pinyin">shū</div>
+      <div class="meaning">sách</div>
+      <button class="speak" onclick="event.stopPropagation();speak('书')">🔊 Nghe từ</button>
+    </div>
+  </div>
+</article>
+
+<article class="flashcard" tabindex="0" onclick="this.classList.toggle('flipped')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();this.classList.toggle('flipped')}">
+  <div class="flash-inner">
+    <div class="flash-front">
+      <div class="emoji">🥬</div>
+      <div class="han">菜</div>
+      <div class="tap">Chạm để xem pinyin và nghĩa</div>
+    </div>
+    <div class="flash-back">
+      <div class="han small">菜</div>
+      <div class="pinyin">cài</div>
+      <div class="meaning">rau; món ăn</div>
+      <button class="speak" onclick="event.stopPropagation();speak('菜')">🔊 Nghe từ</button>
+    </div>
+  </div>
+</article>
+
+<article class="flashcard" tabindex="0" onclick="this.classList.toggle('flipped')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();this.classList.toggle('flipped')}">
+  <div class="flash-inner">
+    <div class="flash-front">
+      <div class="emoji">🙇</div>
+      <div class="han">对不起</div>
+      <div class="tap">Chạm để xem pinyin và nghĩa</div>
+    </div>
+    <div class="flash-back">
+      <div class="han small">对不起</div>
+      <div class="pinyin">duìbuqǐ</div>
+      <div class="meaning">xin lỗi</div>
+      <button class="speak" onclick="event.stopPropagation();speak('对不起')">🔊 Nghe từ</button>
+    </div>
+  </div>
+</article>
+
+<article class="flashcard" tabindex="0" onclick="this.classList.toggle('flipped')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();this.classList.toggle('flipped')}">
+  <div class="flash-inner">
+    <div class="flash-front">
+      <div class="emoji">🤝</div>
+      <div class="han">没关系</div>
+      <div class="tap">Chạm để xem pinyin và nghĩa</div>
+    </div>
+    <div class="flash-back">
+      <div class="han small">没关系</div>
+      <div class="pinyin">méi guānxi</div>
+      <div class="meaning">không sao; không có gì</div>
+      <button class="speak" onclick="event.stopPropagation();speak('没关系')">🔊 Nghe từ</button>
+    </div>
+  </div>
+</article>
+
+<article class="flashcard" tabindex="0" onclick="this.classList.toggle('flipped')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();this.classList.toggle('flipped')}">
+  <div class="flash-inner">
+    <div class="flash-front">
+      <div class="emoji">👌</div>
+      <div class="han">没事</div>
+      <div class="tap">Chạm để xem pinyin và nghĩa</div>
+    </div>
+    <div class="flash-back">
+      <div class="han small">没事</div>
+      <div class="pinyin">méi shì</div>
+      <div class="meaning">không sao; không có việc gì</div>
+      <button class="speak" onclick="event.stopPropagation();speak('没事')">🔊 Nghe từ</button>
+    </div>
+  </div>
+</article>
+
+<article class="flashcard" tabindex="0" onclick="this.classList.toggle('flipped')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();this.classList.toggle('flipped')}">
+  <div class="flash-inner">
+    <div class="flash-front">
+      <div class="emoji">😊</div>
+      <div class="han">高兴</div>
+      <div class="tap">Chạm để xem pinyin và nghĩa</div>
+    </div>
+    <div class="flash-back">
+      <div class="han small">高兴</div>
+      <div class="pinyin">gāoxìng</div>
+      <div class="meaning">vui; vui mừng</div>
+      <button class="speak" onclick="event.stopPropagation();speak('高兴')">🔊 Nghe từ</button>
+    </div>
+  </div>
+</article>
+
+<article class="flashcard" tabindex="0" onclick="this.classList.toggle('flipped')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();this.classList.toggle('flipped')}">
+  <div class="flash-inner">
+    <div class="flash-front">
+      <div class="emoji">👋</div>
+      <div class="han">认识</div>
+      <div class="tap">Chạm để xem pinyin và nghĩa</div>
+    </div>
+    <div class="flash-back">
+      <div class="han small">认识</div>
+      <div class="pinyin">rènshi</div>
+      <div class="meaning">biết; làm quen</div>
+      <button class="speak" onclick="event.stopPropagation();speak('认识')">🔊 Nghe từ</button>
+    </div>
+  </div>
+</article>
+
+<article class="flashcard" tabindex="0" onclick="this.classList.toggle('flipped')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();this.classList.toggle('flipped')}">
+  <div class="flash-inner">
+    <div class="flash-front">
+      <div class="emoji">⭐</div>
+      <div class="han">很</div>
+      <div class="tap">Chạm để xem pinyin và nghĩa</div>
+    </div>
+    <div class="flash-back">
+      <div class="han small">很</div>
+      <div class="pinyin">hěn</div>
+      <div class="meaning">rất</div>
+      <button class="speak" onclick="event.stopPropagation();speak('很')">🔊 Nghe từ</button>
+    </div>
+  </div>
+</article></div>
+<h2 style="margin-top:34px">Bảng từ vựng chi tiết</h2><div class="table-wrap"><table><thead><tr><th>Chữ Hán</th><th>Pinyin</th><th>Âm Hán Việt</th><th>Nghĩa</th><th>Từ tính</th><th>Ví dụ</th><th>Nghe</th></tr></thead><tbody>
+<tr>
+<td><span class="emoji-sm">👭</span><strong class="zh">朋友</strong></td>
+<td>péngyou</td><td>bằng hữu</td><td>bạn bè</td><td>danh từ</td>
+<td><span class="zh">这是我的朋友。</span><br><span class="muted">Zhè shì wǒ de péngyou.<br>Đây là bạn của tôi.</span></td>
+<td><button class="icon-btn" onclick="speak('朋友')" title="Nghe từ">🔊</button>
+<button class="icon-btn" onclick="speak('这是我的朋友。')" title="Nghe ví dụ">🎧</button></td>
+</tr>
+
+<tr>
+<td><span class="emoji-sm">🐶</span><strong class="zh">狗</strong></td>
+<td>gǒu</td><td>cẩu</td><td>con chó</td><td>danh từ</td>
+<td><span class="zh">我有一只狗。</span><br><span class="muted">Wǒ yǒu yì zhī gǒu.<br>Tôi có một con chó.</span></td>
+<td><button class="icon-btn" onclick="speak('狗')" title="Nghe từ">🔊</button>
+<button class="icon-btn" onclick="speak('我有一只狗。')" title="Nghe ví dụ">🎧</button></td>
+</tr>
+
+<tr>
+<td><span class="emoji-sm">📱</span><strong class="zh">手机</strong></td>
+<td>shǒujī</td><td>thủ cơ</td><td>điện thoại di động</td><td>danh từ</td>
+<td><span class="zh">这是我的手机。</span><br><span class="muted">Zhè shì wǒ de shǒujī.<br>Đây là điện thoại của tôi.</span></td>
+<td><button class="icon-btn" onclick="speak('手机')" title="Nghe từ">🔊</button>
+<button class="icon-btn" onclick="speak('这是我的手机。')" title="Nghe ví dụ">🎧</button></td>
+</tr>
+
+<tr>
+<td><span class="emoji-sm">🇨🇳</span><strong class="zh">中国</strong></td>
+<td>Zhōngguó</td><td>Trung Quốc</td><td>Trung Quốc</td><td>danh từ riêng</td>
+<td><span class="zh">我是中国人。</span><br><span class="muted">Wǒ shì Zhōngguó rén.<br>Tôi là người Trung Quốc.</span></td>
+<td><button class="icon-btn" onclick="speak('中国')" title="Nghe từ">🔊</button>
+<button class="icon-btn" onclick="speak('我是中国人。')" title="Nghe ví dụ">🎧</button></td>
+</tr>
+
+<tr>
+<td><span class="emoji-sm">🇯🇵</span><strong class="zh">日本</strong></td>
+<td>Rìběn</td><td>Nhật Bản</td><td>Nhật Bản</td><td>danh từ riêng</td>
+<td><span class="zh">他是日本人。</span><br><span class="muted">Tā shì Rìběn rén.<br>Anh ấy là người Nhật Bản.</span></td>
+<td><button class="icon-btn" onclick="speak('日本')" title="Nghe từ">🔊</button>
+<button class="icon-btn" onclick="speak('他是日本人。')" title="Nghe ví dụ">🎧</button></td>
+</tr>
+
+<tr>
+<td><span class="emoji-sm">🇻🇳</span><strong class="zh">越南</strong></td>
+<td>Yuènán</td><td>Việt Nam</td><td>Việt Nam</td><td>danh từ riêng</td>
+<td><span class="zh">我是越南人。</span><br><span class="muted">Wǒ shì Yuènán rén.<br>Tôi là người Việt Nam.</span></td>
+<td><button class="icon-btn" onclick="speak('越南')" title="Nghe từ">🔊</button>
+<button class="icon-btn" onclick="speak('我是越南人。')" title="Nghe ví dụ">🎧</button></td>
+</tr>
+
+<tr>
+<td><span class="emoji-sm">📚</span><strong class="zh">书</strong></td>
+<td>shū</td><td>thư</td><td>sách</td><td>danh từ</td>
+<td><span class="zh">这是什么书？</span><br><span class="muted">Zhè shì shénme shū?<br>Đây là sách gì?</span></td>
+<td><button class="icon-btn" onclick="speak('书')" title="Nghe từ">🔊</button>
+<button class="icon-btn" onclick="speak('这是什么书？')" title="Nghe ví dụ">🎧</button></td>
+</tr>
+
+<tr>
+<td><span class="emoji-sm">🥬</span><strong class="zh">菜</strong></td>
+<td>cài</td><td>thái</td><td>rau; món ăn</td><td>danh từ</td>
+<td><span class="zh">我喜欢吃中国菜。</span><br><span class="muted">Wǒ xǐhuan chī Zhōngguó cài.<br>Tôi thích ăn món Trung Quốc.</span></td>
+<td><button class="icon-btn" onclick="speak('菜')" title="Nghe từ">🔊</button>
+<button class="icon-btn" onclick="speak('我喜欢吃中国菜。')" title="Nghe ví dụ">🎧</button></td>
+</tr>
+
+<tr>
+<td><span class="emoji-sm">🙇</span><strong class="zh">对不起</strong></td>
+<td>duìbuqǐ</td><td>đối bất khởi</td><td>xin lỗi</td><td>cụm từ</td>
+<td><span class="zh">对不起，我来晚了。</span><br><span class="muted">Duìbuqǐ, wǒ lái wǎn le.<br>Xin lỗi, tôi đến muộn.</span></td>
+<td><button class="icon-btn" onclick="speak('对不起')" title="Nghe từ">🔊</button>
+<button class="icon-btn" onclick="speak('对不起，我来晚了。')" title="Nghe ví dụ">🎧</button></td>
+</tr>
+
+<tr>
+<td><span class="emoji-sm">🤝</span><strong class="zh">没关系</strong></td>
+<td>méi guānxi</td><td>một quan hệ</td><td>không sao; không có gì</td><td>cụm từ</td>
+<td><span class="zh">没关系，下次注意。</span><br><span class="muted">Méi guānxi, xià cì zhùyì.<br>Không sao, lần sau chú ý nhé.</span></td>
+<td><button class="icon-btn" onclick="speak('没关系')" title="Nghe từ">🔊</button>
+<button class="icon-btn" onclick="speak('没关系，下次注意。')" title="Nghe ví dụ">🎧</button></td>
+</tr>
+
+<tr>
+<td><span class="emoji-sm">👌</span><strong class="zh">没事</strong></td>
+<td>méi shì</td><td>một sự</td><td>không sao; không có việc gì</td><td>cụm từ</td>
+<td><span class="zh">我没事，谢谢。</span><br><span class="muted">Wǒ méi shì, xièxie.<br>Tôi không sao, cảm ơn.</span></td>
+<td><button class="icon-btn" onclick="speak('没事')" title="Nghe từ">🔊</button>
+<button class="icon-btn" onclick="speak('我没事，谢谢。')" title="Nghe ví dụ">🎧</button></td>
+</tr>
+
+<tr>
+<td><span class="emoji-sm">😊</span><strong class="zh">高兴</strong></td>
+<td>gāoxìng</td><td>cao hứng</td><td>vui; vui mừng</td><td>tính từ</td>
+<td><span class="zh">今天我很高兴。</span><br><span class="muted">Jīntiān wǒ hěn gāoxìng.<br>Hôm nay tôi rất vui.</span></td>
+<td><button class="icon-btn" onclick="speak('高兴')" title="Nghe từ">🔊</button>
+<button class="icon-btn" onclick="speak('今天我很高兴。')" title="Nghe ví dụ">🎧</button></td>
+</tr>
+
+<tr>
+<td><span class="emoji-sm">👋</span><strong class="zh">认识</strong></td>
+<td>rènshi</td><td>nhận thức</td><td>biết; làm quen</td><td>động từ</td>
+<td><span class="zh">很高兴认识你。</span><br><span class="muted">Hěn gāoxìng rènshi nǐ.<br>Rất vui được làm quen với bạn.</span></td>
+<td><button class="icon-btn" onclick="speak('认识')" title="Nghe từ">🔊</button>
+<button class="icon-btn" onclick="speak('很高兴认识你。')" title="Nghe ví dụ">🎧</button></td>
+</tr>
+
+<tr>
+<td><span class="emoji-sm">⭐</span><strong class="zh">很</strong></td>
+<td>hěn</td><td>ngận</td><td>rất</td><td>phó từ</td>
+<td><span class="zh">她很好。</span><br><span class="muted">Tā hěn hǎo.<br>Cô ấy rất tốt/khỏe.</span></td>
+<td><button class="icon-btn" onclick="speak('很')" title="Nghe từ">🔊</button>
+<button class="icon-btn" onclick="speak('她很好。')" title="Nghe ví dụ">🎧</button></td>
+</tr></tbody></table></div></section>
+
+<section id="stroke"><h2>笔顺 · Thứ tự nét</h2><p class="lead">Mỗi chữ có hoạt hình nét viết. Bấm “Xem nét” để phát lại; bấm “Tập viết” để luyện trực tiếp.</p><div id="strokeGrid" class="stroke-grid"></div></section>
+
+<section id="practice"><h2>Hai hoạt động ôn tập</h2>
+<div class="activities">
+<div class="activity"><h3>1. Ghép từ với nghĩa</h3><p>Chọn một ô tiếng Trung và một ô tiếng Việt.</p><div id="matchGrid" class="match-grid"></div><div id="matchFeedback" class="feedback"></div><button class="primary-btn" onclick="buildMatch()">Làm lại</button></div>
+<div class="activity"><h3>2. Sắp xếp câu</h3><p id="orderHint">Sắp xếp thành câu: “Rất vui được làm quen với bạn.”</p><div id="tokenBank" class="order-area"></div><div id="answerArea" class="order-area"></div><button class="primary-btn" onclick="checkOrder()">Kiểm tra</button> <button class="primary-btn" onclick="nextOrder()" style="background:#ff8a65">Câu khác</button><div id="orderFeedback" class="feedback"></div></div>
+</div></section>
+
+<section id="grammar"><h2>Phần 2 · Ngữ pháp</h2><div class="grammar-grid">
+<div class="grammar-card">
+  <h3>V + 什么 + N</h3><p>Dùng để hỏi “làm/động tác gì + danh từ nào”.</p>
+  <div class="example-box"><b>你看什么书？</b><span>Bạn đọc sách gì?</span>
+  <button class="icon-btn" onclick="speak('你看什么书？')">🔊</button></div>
+</div>
+
+<div class="grammar-card">
+  <h3>是 / 不是</h3><p>是 dùng để khẳng định “là”; 不是 dùng để phủ định “không phải là”.</p>
+  <div class="example-box"><b>我是老师。／我不是学生。</b><span>Tôi là giáo viên. / Tôi không phải học sinh.</span>
+  <button class="icon-btn" onclick="speak('我是老师。。我不是学生。')">🔊</button></div>
+</div>
+
+<div class="grammar-card">
+  <h3>这是…… / 这不是……</h3><p>Giới thiệu hoặc xác định đồ vật/người ở gần người nói.</p>
+  <div class="example-box"><b>这是手机。／这不是书。</b><span>Đây là điện thoại. / Đây không phải sách.</span>
+  <button class="icon-btn" onclick="speak('这是手机。。这不是书。')">🔊</button></div>
+</div>
+
+<div class="grammar-card">
+  <h3>很 + tính từ</h3><p>很 đứng trước tính từ. Ở câu miêu tả đơn giản, 很 thường làm câu tự nhiên hơn.</p>
+  <div class="example-box"><b>我很高兴。</b><span>Tôi rất vui.</span>
+  <button class="icon-btn" onclick="speak('我很高兴。')">🔊</button></div>
+</div>
+
+<div class="grammar-card">
+  <h3>S + V + O</h3><p>Trật tự cơ bản: Chủ ngữ + Động từ + Tân ngữ.</p>
+  <div class="example-box"><b>我认识他。</b><span>Tôi biết anh ấy.</span>
+  <button class="icon-btn" onclick="speak('我认识他。')">🔊</button></div>
+</div></div>
+<div class="note" style="margin-top:16px"><b>Lưu ý:</b> Trong câu miêu tả đơn giản, tiếng Trung thường nói <span class="zh">我很好</span>, không nói <span class="zh">我是很好</span>.</div></section>
+
+<section id="patterns"><h2>Phần 3 · Mẫu câu</h2><p class="lead">Nghe trước, sau đó bấm để hiện pinyin và nghĩa rồi đọc theo.</p><div class="sentence-list">
+<div class="sentence-card">
+  <div class="sentence-main">
+    <span class="zh sentence">你叫什么名字？</span>
+    <button class="icon-btn" onclick="speak('你叫什么名字？')">🔊</button>
+  </div>
+  <button class="reveal-btn" onclick="this.nextElementSibling.classList.toggle('show')">Hiện pinyin và nghĩa</button>
+  <div class="sentence-detail"><div>Nǐ jiào shénme míngzi?</div><div>Bạn tên là gì?</div></div>
+</div>
+
+<div class="sentence-card">
+  <div class="sentence-main">
+    <span class="zh sentence">你是哪国人？</span>
+    <button class="icon-btn" onclick="speak('你是哪国人？')">🔊</button>
+  </div>
+  <button class="reveal-btn" onclick="this.nextElementSibling.classList.toggle('show')">Hiện pinyin và nghĩa</button>
+  <div class="sentence-detail"><div>Nǐ shì nǎ guó rén?</div><div>Bạn là người nước nào?</div></div>
+</div>
+
+<div class="sentence-card">
+  <div class="sentence-main">
+    <span class="zh sentence">请问，这是什么？</span>
+    <button class="icon-btn" onclick="speak('请问，这是什么？')">🔊</button>
+  </div>
+  <button class="reveal-btn" onclick="this.nextElementSibling.classList.toggle('show')">Hiện pinyin và nghĩa</button>
+  <div class="sentence-detail"><div>Qǐngwèn, zhè shì shénme?</div><div>Xin hỏi, đây là cái gì?</div></div>
+</div>
+
+<div class="sentence-card">
+  <div class="sentence-main">
+    <span class="zh sentence">很高兴认识你。</span>
+    <button class="icon-btn" onclick="speak('很高兴认识你。')">🔊</button>
+  </div>
+  <button class="reveal-btn" onclick="this.nextElementSibling.classList.toggle('show')">Hiện pinyin và nghĩa</button>
+  <div class="sentence-detail"><div>Hěn gāoxìng rènshi nǐ.</div><div>Rất vui được làm quen với bạn.</div></div>
+</div>
+
+<div class="sentence-card">
+  <div class="sentence-main">
+    <span class="zh sentence">我来介绍一下。</span>
+    <button class="icon-btn" onclick="speak('我来介绍一下。')">🔊</button>
+  </div>
+  <button class="reveal-btn" onclick="this.nextElementSibling.classList.toggle('show')">Hiện pinyin và nghĩa</button>
+  <div class="sentence-detail"><div>Wǒ lái jièshào yíxià.</div><div>Để tôi giới thiệu một chút.</div></div>
+</div>
+
+<div class="sentence-card">
+  <div class="sentence-main">
+    <span class="zh sentence">我叫安妮。</span>
+    <button class="icon-btn" onclick="speak('我叫安妮。')">🔊</button>
+  </div>
+  <button class="reveal-btn" onclick="this.nextElementSibling.classList.toggle('show')">Hiện pinyin và nghĩa</button>
+  <div class="sentence-detail"><div>Wǒ jiào Ānnī.</div><div>Tôi tên là An Ni.</div></div>
+</div>
+
+<div class="sentence-card">
+  <div class="sentence-main">
+    <span class="zh sentence">我是越南人。</span>
+    <button class="icon-btn" onclick="speak('我是越南人。')">🔊</button>
+  </div>
+  <button class="reveal-btn" onclick="this.nextElementSibling.classList.toggle('show')">Hiện pinyin và nghĩa</button>
+  <div class="sentence-detail"><div>Wǒ shì Yuènán rén.</div><div>Tôi là người Việt Nam.</div></div>
+</div>
+
+<div class="sentence-card">
+  <div class="sentence-main">
+    <span class="zh sentence">我二十三岁。</span>
+    <button class="icon-btn" onclick="speak('我二十三岁。')">🔊</button>
+  </div>
+  <button class="reveal-btn" onclick="this.nextElementSibling.classList.toggle('show')">Hiện pinyin và nghĩa</button>
+  <div class="sentence-detail"><div>Wǒ èrshísān suì.</div><div>Tôi 23 tuổi.</div></div>
+</div></div></section>
+</main><footer>
+  <div>HSK1 · Bài học tương tác dành cho người học Việt Nam</div>
+  <div style="margin-top:10px;font-size:16px;">
+    Tiếng Trung Minxian (Minxian.chinese) &nbsp; | &nbsp; Zalo: 0833312711
+  </div>
+</footer>
+<script>
+const vocab=[{"han": "朋友", "pinyin": "péngyou", "hv": "bằng hữu", "meaning": "bạn bè", "pos": "danh từ", "emoji": "👭", "example": "这是我的朋友。", "ep": "Zhè shì wǒ de péngyou.", "em": "Đây là bạn của tôi."}, {"han": "狗", "pinyin": "gǒu", "hv": "cẩu", "meaning": "con chó", "pos": "danh từ", "emoji": "🐶", "example": "我有一只狗。", "ep": "Wǒ yǒu yì zhī gǒu.", "em": "Tôi có một con chó."}, {"han": "手机", "pinyin": "shǒujī", "hv": "thủ cơ", "meaning": "điện thoại di động", "pos": "danh từ", "emoji": "📱", "example": "这是我的手机。", "ep": "Zhè shì wǒ de shǒujī.", "em": "Đây là điện thoại của tôi."}, {"han": "中国", "pinyin": "Zhōngguó", "hv": "Trung Quốc", "meaning": "Trung Quốc", "pos": "danh từ riêng", "emoji": "🇨🇳", "example": "我是中国人。", "ep": "Wǒ shì Zhōngguó rén.", "em": "Tôi là người Trung Quốc."}, {"han": "日本", "pinyin": "Rìběn", "hv": "Nhật Bản", "meaning": "Nhật Bản", "pos": "danh từ riêng", "emoji": "🇯🇵", "example": "他是日本人。", "ep": "Tā shì Rìběn rén.", "em": "Anh ấy là người Nhật Bản."}, {"han": "越南", "pinyin": "Yuènán", "hv": "Việt Nam", "meaning": "Việt Nam", "pos": "danh từ riêng", "emoji": "🇻🇳", "example": "我是越南人。", "ep": "Wǒ shì Yuènán rén.", "em": "Tôi là người Việt Nam."}, {"han": "书", "pinyin": "shū", "hv": "thư", "meaning": "sách", "pos": "danh từ", "emoji": "📚", "example": "这是什么书？", "ep": "Zhè shì shénme shū?", "em": "Đây là sách gì?"}, {"han": "菜", "pinyin": "cài", "hv": "thái", "meaning": "rau; món ăn", "pos": "danh từ", "emoji": "🥬", "example": "我喜欢吃中国菜。", "ep": "Wǒ xǐhuan chī Zhōngguó cài.", "em": "Tôi thích ăn món Trung Quốc."}, {"han": "对不起", "pinyin": "duìbuqǐ", "hv": "đối bất khởi", "meaning": "xin lỗi", "pos": "cụm từ", "emoji": "🙇", "example": "对不起，我来晚了。", "ep": "Duìbuqǐ, wǒ lái wǎn le.", "em": "Xin lỗi, tôi đến muộn."}, {"han": "没关系", "pinyin": "méi guānxi", "hv": "một quan hệ", "meaning": "không sao; không có gì", "pos": "cụm từ", "emoji": "🤝", "example": "没关系，下次注意。", "ep": "Méi guānxi, xià cì zhùyì.", "em": "Không sao, lần sau chú ý nhé."}, {"han": "没事", "pinyin": "méi shì", "hv": "một sự", "meaning": "không sao; không có việc gì", "pos": "cụm từ", "emoji": "👌", "example": "我没事，谢谢。", "ep": "Wǒ méi shì, xièxie.", "em": "Tôi không sao, cảm ơn."}, {"han": "高兴", "pinyin": "gāoxìng", "hv": "cao hứng", "meaning": "vui; vui mừng", "pos": "tính từ", "emoji": "😊", "example": "今天我很高兴。", "ep": "Jīntiān wǒ hěn gāoxìng.", "em": "Hôm nay tôi rất vui."}, {"han": "认识", "pinyin": "rènshi", "hv": "nhận thức", "meaning": "biết; làm quen", "pos": "động từ", "emoji": "👋", "example": "很高兴认识你。", "ep": "Hěn gāoxìng rènshi nǐ.", "em": "Rất vui được làm quen với bạn."}, {"han": "很", "pinyin": "hěn", "hv": "ngận", "meaning": "rất", "pos": "phó từ", "emoji": "⭐", "example": "她很好。", "ep": "Tā hěn hǎo.", "em": "Cô ấy rất tốt/khỏe."}];
+const patterns=[["你叫什么名字？", "Nǐ jiào shénme míngzi?", "Bạn tên là gì?"], ["你是哪国人？", "Nǐ shì nǎ guó rén?", "Bạn là người nước nào?"], ["请问，这是什么？", "Qǐngwèn, zhè shì shénme?", "Xin hỏi, đây là cái gì?"], ["很高兴认识你。", "Hěn gāoxìng rènshi nǐ.", "Rất vui được làm quen với bạn."], ["我来介绍一下。", "Wǒ lái jièshào yíxià.", "Để tôi giới thiệu một chút."], ["我叫安妮。", "Wǒ jiào Ānnī.", "Tôi tên là An Ni."], ["我是越南人。", "Wǒ shì Yuènán rén.", "Tôi là người Việt Nam."], ["我二十三岁。", "Wǒ èrshísān suì.", "Tôi 23 tuổi."]];
+
+function speak(text){
+  if(!('speechSynthesis' in window)){alert('Trình duyệt này chưa hỗ trợ đọc văn bản.');return;}
+  speechSynthesis.cancel();
+  const u=new SpeechSynthesisUtterance(text); u.lang='zh-CN'; u.rate=.78; u.pitch=1;
+  const voices=speechSynthesis.getVoices(); const zh=voices.find(v=>v.lang && v.lang.toLowerCase().startsWith('zh'));
+  if(zh) u.voice=zh; speechSynthesis.speak(u);
+}
+
+const writers={};
+function buildStroke(){
+  const grid=document.getElementById('strokeGrid');
+  vocab.forEach((v,wi)=>{
+    const card=document.createElement('div'); card.className='stroke-card';
+    const ids=[...v.han].map((c,i)=>`hz-${wi}-${i}`);
+    card.innerHTML=`<div class="stroke-title"><div><b class="zh" style="font-size:1.5rem">${v.han}</b><br><span>${v.pinyin} · ${v.meaning}</span></div></div>
+    <div class="stroke-chars">${ids.map(id=>`<div id="${id}" class="char-box"></div>`).join('')}</div>
+    <button class="primary-btn" onclick="animateWord(${wi})">▶ Xem nét</button>
+    <button class="primary-btn" style="background:#ff8a65" onclick="quizWord(${wi})">✍ Tập viết</button>`;
+    grid.appendChild(card);
+    writers[wi]=[];
+    [...v.han].forEach((ch,i)=>{
+      try{writers[wi].push(HanziWriter.create(ids[i],ch,{width:88,height:88,padding:5,showOutline:true,strokeAnimationSpeed:1,delayBetweenStrokes:180}));}
+      catch(e){document.getElementById(ids[i]).textContent=ch;}
+    });
+  });
+}
+async function animateWord(i){for(const w of writers[i]||[]){await w.animateCharacter();}}
+function quizWord(i){(writers[i]||[]).forEach(w=>w.quiz({showHintAfterMisses:2,highlightOnComplete:true}));}
+
+let selected=null;
+function shuffle(a){return [...a].sort(()=>Math.random()-.5)}
+function buildMatch(){
+  const picks=shuffle(vocab).slice(0,6); const items=[];
+  picks.forEach((v,i)=>{items.push({id:i,type:'zh',text:v.han});items.push({id:i,type:'vi',text:v.meaning})});
+  const grid=document.getElementById('matchGrid'); grid.innerHTML=''; selected=null;
+  shuffle(items).forEach(it=>{
+    const d=document.createElement('button'); d.className='match-item'+(it.type==='zh'?' zh':''); d.textContent=it.text; d.dataset.id=it.id; d.dataset.type=it.type;
+    d.onclick=()=>selectMatch(d); grid.appendChild(d);
+  });
+  document.getElementById('matchFeedback').textContent='';
+}
+function selectMatch(el){
+  if(el.classList.contains('matched'))return;
+  if(!selected){selected=el;el.classList.add('selected');return;}
+  if(selected===el){el.classList.remove('selected');selected=null;return;}
+  if(selected.dataset.type===el.dataset.type){selected.classList.remove('selected');selected=el;el.classList.add('selected');return;}
+  if(selected.dataset.id===el.dataset.id){
+    selected.classList.remove('selected'); selected.classList.add('matched'); el.classList.add('matched');
+    document.getElementById('matchFeedback').textContent='✅ Chính xác!'; selected=null;
+  } else {
+    const a=selected; a.classList.remove('selected'); document.getElementById('matchFeedback').textContent='❌ Chưa đúng, thử lại nhé.'; selected=null;
+  }
+}
+
+const orderQs=[
+  {hint:'Rất vui được làm quen với bạn.',tokens:['很','高兴','认识','你'],answer:'很高兴认识你'},
+  {hint:'Bạn là người nước nào?',tokens:['你','是','哪国','人'],answer:'你是哪国人'},
+  {hint:'Đây là điện thoại.',tokens:['这','是','手机'],answer:'这是手机'},
+  {hint:'Tôi không phải là người Nhật Bản.',tokens:['我','不是','日本人'],answer:'我不是日本人'}
+];
+let oq=0, chosen=[];
+function renderOrder(){
+  const q=orderQs[oq]; chosen=[];
+  document.getElementById('orderHint').textContent='Sắp xếp thành câu: “'+q.hint+'”';
+  const bank=document.getElementById('tokenBank'), ans=document.getElementById('answerArea'); bank.innerHTML='';ans.innerHTML='';
+  shuffle(q.tokens).forEach((t,i)=>{const b=document.createElement('button');b.className='token zh';b.textContent=t;b.onclick=()=>{chosen.push(t);b.classList.add('used');b.disabled=true;renderChosen();};bank.appendChild(b);});
+  document.getElementById('orderFeedback').textContent='';
+}
+function renderChosen(){
+  const ans=document.getElementById('answerArea');ans.innerHTML='';
+  chosen.forEach((t,i)=>{const b=document.createElement('button');b.className='token zh';b.textContent=t;b.onclick=()=>{chosen.splice(i,1);renderOrderFromChosen();};ans.appendChild(b);});
+}
+function renderOrderFromChosen(){
+  const q=orderQs[oq], bank=document.getElementById('tokenBank'); bank.innerHTML='';
+  q.tokens.forEach((t,i)=>{const usedCount=chosen.filter(x=>x===t).length; const totalBefore=q.tokens.slice(0,i+1).filter(x=>x===t).length; const b=document.createElement('button');b.className='token zh';b.textContent=t;
+  if(totalBefore<=usedCount){b.classList.add('used');b.disabled=true} else b.onclick=()=>{chosen.push(t);renderOrderFromChosen();};bank.appendChild(b);});
+  renderChosen();
+}
+function checkOrder(){
+  const got=chosen.join(''); const q=orderQs[oq]; const f=document.getElementById('orderFeedback');
+  if(got===q.answer){f.textContent='✅ Chính xác: '+q.answer; speak(q.answer+'。')} else f.textContent='❌ Chưa đúng. Hãy thử lại.';
+}
+function nextOrder(){oq=(oq+1)%orderQs.length;renderOrder();}
+
+window.addEventListener('load',()=>{buildStroke();buildMatch();renderOrder();});
+</script>
+</body></html>
