@@ -1,0 +1,618 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>HSK1 – Chào hỏi và xưng hô</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=LXGW+WenKai:wght@400;700&family=Noto+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/hanzi-writer@3.7/dist/hanzi-writer.min.js"></script>
+<style>
+:root{--ink:#263238;--paper:#fffdf7;--red:#ff6b6b;--yellow:#ffd166;--blue:#5dade2;--green:#69d09c;--purple:#a78bfa}
+*{box-sizing:border-box}
+body{margin:0;color:var(--ink);background:
+radial-gradient(circle at 10% 10%,#fff1a8 0 6%,transparent 7%),
+radial-gradient(circle at 90% 4%,#d7f6ff 0 7%,transparent 8%),
+linear-gradient(135deg,#fffdf7,#f6fbff);font-family:"Times New Roman",serif}
+header{padding:42px 20px 30px;text-align:center;background:linear-gradient(135deg,#ff8a8a,#ffd166 50%,#83d8ff);border-bottom:6px solid white}
+header h1{margin:0;font-family:"Times New Roman",Times,serif;font-size:clamp(38px,7vw,76px);color:#6b2135;text-shadow:0 3px 0 #fff}
+header p{font-size:18px;margin:8px auto 0;max-width:760px}
+nav{position:sticky;top:0;z-index:10;display:flex;justify-content:center;gap:10px;flex-wrap:wrap;padding:12px;background:#ffffffee;backdrop-filter:blur(10px);box-shadow:0 4px 18px #0001}
+nav a{text-decoration:none;color:#263238;padding:8px 15px;border-radius:999px;background:#f0f4ff;font-weight:bold}
+section.main{max-width:1200px;margin:auto;padding:36px 18px}
+.section-title{display:flex;align-items:center;gap:14px;margin-bottom:22px}
+.section-title .num{width:50px;height:50px;border-radius:16px;display:grid;place-items:center;background:var(--red);color:white;font-size:26px;font-weight:bold;box-shadow:0 8px 0 #d64d4d}
+.section-title h2{margin:0;font-family:"Times New Roman",Times,serif;font-size:36px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:22px}
+.flashcard{height:380px;perspective:1200px;cursor:pointer;outline:none}
+.card-inner{position:relative;width:100%;height:100%;transition:transform .65s;transform-style:preserve-3d}
+.flashcard.flipped .card-inner{transform:rotateY(180deg)}
+.card-face{position:absolute;inset:0;backface-visibility:hidden;border-radius:26px;padding:22px;border:4px solid white;box-shadow:0 15px 35px #37516a22;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;overflow:hidden}
+.card-front{background:linear-gradient(145deg,#fff,#eaf8ff)}
+.card-back{background:linear-gradient(145deg,#fff9e8,#fff);transform:rotateY(180deg);align-items:stretch;text-align:left;justify-content:flex-start}
+.card-front:before{content:"";position:absolute;width:150px;height:150px;border-radius:50%;background:#ffd16655;top:-45px;right:-45px}
+.art{font-size:70px;filter:drop-shadow(0 8px 8px #0002)}
+.han,.sentence-han,.ex-han,.zh{font-family:"LXGW WenKai","STKaiti","KaiTi",serif}
+.han{font-size:55px;color:#bd3b58;margin-top:8px}
+.pinyin{font-family:"Noto Sans","Helvetica Neue",Arial,sans-serif;font-size:22px;font-weight:700;color:#235789}
+.meaning{font-size:20px;margin:8px 0 14px}
+.card-back h3{margin:0 0 14px;font-family:"LXGW WenKai","STKaiti","KaiTi",serif;font-size:35px;color:#a52a4a}
+.card-back h3 span{font-family:"Noto Sans","Helvetica Neue",Arial,sans-serif;font-size:20px;font-weight:700;color:#235789}
+.card-back p{margin:6px 0;font-size:17px}
+.example{background:#fff;border-left:5px solid var(--yellow);padding:10px 12px;border-radius:12px;margin:10px 0}
+.ex-han{font-size:25px}
+.ex-py{font-family:"Noto Sans","Helvetica Neue",Arial,sans-serif;color:#235789;font-weight:700}
+.ex-vi{font-style:italic}
+.speak-btn{border:0;border-radius:999px;background:linear-gradient(135deg,#5dade2,#6c8cff);color:white;font-weight:bold;padding:10px 16px;cursor:pointer;box-shadow:0 5px 0 #4666c7;font-family:"Times New Roman",serif}
+.speak-btn:active{transform:translateY(3px);box-shadow:0 2px 0 #4666c7}
+small{margin-top:12px;color:#667}
+.stroke-panel{background:white;border-radius:28px;padding:22px;box-shadow:0 15px 35px #37516a18}
+.char-picker{display:flex;flex-wrap:wrap;gap:9px;margin-bottom:18px}
+.char-picker button{font-family:"LXGW WenKai","STKaiti","KaiTi",serif;font-size:26px;width:52px;height:52px;border:2px solid #d7e5ff;border-radius:14px;background:#f7faff;cursor:pointer}
+.char-picker button.active{background:#ffd166;border-color:#ffb703}
+.stroke-layout{display:grid;grid-template-columns:minmax(300px,470px) minmax(300px,1fr);gap:24px;align-items:start}
+.writer-box{display:grid;place-items:center;background:#fffdf7;border:3px dashed #ffb4b4;border-radius:22px;min-height:440px}
+.writer-controls{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-top:14px}
+.writer-controls button{border:0;border-radius:12px;padding:10px 14px;font-weight:bold;cursor:pointer;background:#f0f4ff}
+.practice-wrap{background:#f8fbff;padding:18px;border-radius:22px}
+.practice-wrap h3{margin-top:0}
+#practiceCanvas{width:100%;max-width:480px;aspect-ratio:1;background:white;border:2px solid #aac9ff;border-radius:18px;touch-action:none;display:block}
+.practice-buttons{display:flex;gap:10px;margin-top:12px;flex-wrap:wrap}
+.practice-buttons button{border:0;border-radius:12px;padding:10px 14px;cursor:pointer;font-weight:bold}
+.sentences{display:grid;gap:16px}
+.sentence-card{display:flex;align-items:center;gap:16px;background:white;border-radius:22px;padding:18px;box-shadow:0 10px 25px #00000012;border-left:8px solid var(--green)}
+.sentence-no{flex:0 0 44px;width:44px;height:44px;border-radius:50%;display:grid;place-items:center;background:#69d09c;color:white;font-size:22px;font-weight:bold}
+.sentence-content{flex:1}
+.sentence-han{font-size:30px;color:#8d2850}
+.sentence-py{font-family:"Noto Sans","Helvetica Neue",Arial,sans-serif;font-size:18px;color:#235789;font-weight:700;margin:3px 0}
+.sentence-vi{font-size:17px}
+footer{text-align:center;padding:26px;background:#263238;color:white}
+@media(max-width:760px){.stroke-layout{grid-template-columns:1fr}.sentence-card{align-items:flex-start;flex-wrap:wrap}.sentence-card .speak-btn{margin-left:60px}}
+
+.zh{font-family:"LXGW WenKai","STKaiti","KaiTi",serif}
+.vi{font-family:"Times New Roman",Times,serif}
+.py{font-family:"Noto Sans","Helvetica Neue",Arial,sans-serif}
+
+</style>
+</head>
+<body>
+<header>
+  <h1><span class="zh">你好！</span><span class="vi"> HSK 1</span></h1>
+  <p>Học từ vựng qua thẻ lật, nghe phát âm, xem thứ tự nét và tự tay luyện viết.</p>
+</header>
+<nav>
+  <a href="#part1"><span class="vi">① Thẻ từ</span></a><a href="#part2"><span class="vi">② </span><span class="zh">笔顺</span></a><a href="#part3"><span class="vi">③ Mẫu câu</span></a>
+</nav>
+
+<section class="main" id="part1">
+  <div class="section-title"><div class="num">1</div><h2><span class="zh">词卡</span><span class="vi"> · Thẻ từ</span></h2></div>
+  <div class="grid">
+<article class="flashcard" tabindex="0" aria-label="你 - bấm để lật">
+  <div class="card-inner">
+    <section class="card-face card-front">
+      <div class="art" aria-hidden="true">👋</div>
+      <div class="han">你</div>
+      <div class="pinyin">nǐ</div>
+      <div class="meaning">bạn</div>
+      <button class="speak-btn" onclick="event.stopPropagation(); speak('你')">🔊 Nghe từ</button>
+      <small>Bấm vào thẻ để xem chi tiết</small>
+    </section>
+    <section class="card-face card-back">
+      <h3>你 <span>nǐ</span></h3>
+      <p><b>Âm Hán Việt:</b> nhĩ</p>
+      <p><b>Từ tính:</b> đại từ</p>
+      <p><b>Nghĩa:</b> bạn</p>
+      <div class="example">
+        <b>Ví dụ:</b>
+        <div class="ex-han">你好！</div>
+        <div class="ex-py">Nǐ hǎo!</div>
+        <div class="ex-vi">Xin chào!</div>
+      </div>
+      <button class="speak-btn" onclick="event.stopPropagation(); speak('你好！')">🔊 Nghe ví dụ</button>
+    </section>
+  </div>
+</article>
+
+
+<article class="flashcard" tabindex="0" aria-label="你们 - bấm để lật">
+  <div class="card-inner">
+    <section class="card-face card-front">
+      <div class="art" aria-hidden="true">👥</div>
+      <div class="han">你们</div>
+      <div class="pinyin">nǐmen</div>
+      <div class="meaning">các bạn</div>
+      <button class="speak-btn" onclick="event.stopPropagation(); speak('你们')">🔊 Nghe từ</button>
+      <small>Bấm vào thẻ để xem chi tiết</small>
+    </section>
+    <section class="card-face card-back">
+      <h3>你们 <span>nǐmen</span></h3>
+      <p><b>Âm Hán Việt:</b> nhĩ môn</p>
+      <p><b>Từ tính:</b> đại từ</p>
+      <p><b>Nghĩa:</b> các bạn</p>
+      <div class="example">
+        <b>Ví dụ:</b>
+        <div class="ex-han">你们好！</div>
+        <div class="ex-py">Nǐmen hǎo!</div>
+        <div class="ex-vi">Chào các bạn!</div>
+      </div>
+      <button class="speak-btn" onclick="event.stopPropagation(); speak('你们好！')">🔊 Nghe ví dụ</button>
+    </section>
+  </div>
+</article>
+
+
+<article class="flashcard" tabindex="0" aria-label="我 - bấm để lật">
+  <div class="card-inner">
+    <section class="card-face card-front">
+      <div class="art" aria-hidden="true">🙋</div>
+      <div class="han">我</div>
+      <div class="pinyin">wǒ</div>
+      <div class="meaning">tôi, mình</div>
+      <button class="speak-btn" onclick="event.stopPropagation(); speak('我')">🔊 Nghe từ</button>
+      <small>Bấm vào thẻ để xem chi tiết</small>
+    </section>
+    <section class="card-face card-back">
+      <h3>我 <span>wǒ</span></h3>
+      <p><b>Âm Hán Việt:</b> ngã</p>
+      <p><b>Từ tính:</b> đại từ</p>
+      <p><b>Nghĩa:</b> tôi, mình</p>
+      <div class="example">
+        <b>Ví dụ:</b>
+        <div class="ex-han">我是学生。</div>
+        <div class="ex-py">Wǒ shì xuésheng.</div>
+        <div class="ex-vi">Tôi là học sinh.</div>
+      </div>
+      <button class="speak-btn" onclick="event.stopPropagation(); speak('我是学生。')">🔊 Nghe ví dụ</button>
+    </section>
+  </div>
+</article>
+
+
+<article class="flashcard" tabindex="0" aria-label="我们 - bấm để lật">
+  <div class="card-inner">
+    <section class="card-face card-front">
+      <div class="art" aria-hidden="true">🧑‍🤝‍🧑</div>
+      <div class="han">我们</div>
+      <div class="pinyin">wǒmen</div>
+      <div class="meaning">chúng tôi, chúng ta</div>
+      <button class="speak-btn" onclick="event.stopPropagation(); speak('我们')">🔊 Nghe từ</button>
+      <small>Bấm vào thẻ để xem chi tiết</small>
+    </section>
+    <section class="card-face card-back">
+      <h3>我们 <span>wǒmen</span></h3>
+      <p><b>Âm Hán Việt:</b> ngã môn</p>
+      <p><b>Từ tính:</b> đại từ</p>
+      <p><b>Nghĩa:</b> chúng tôi, chúng ta</p>
+      <div class="example">
+        <b>Ví dụ:</b>
+        <div class="ex-han">我们是同学。</div>
+        <div class="ex-py">Wǒmen shì tóngxué.</div>
+        <div class="ex-vi">Chúng tôi là bạn học.</div>
+      </div>
+      <button class="speak-btn" onclick="event.stopPropagation(); speak('我们是同学。')">🔊 Nghe ví dụ</button>
+    </section>
+  </div>
+</article>
+
+
+<article class="flashcard" tabindex="0" aria-label="你好 - bấm để lật">
+  <div class="card-inner">
+    <section class="card-face card-front">
+      <div class="art" aria-hidden="true">😊</div>
+      <div class="han">你好</div>
+      <div class="pinyin">nǐ hǎo</div>
+      <div class="meaning">xin chào</div>
+      <button class="speak-btn" onclick="event.stopPropagation(); speak('你好')">🔊 Nghe từ</button>
+      <small>Bấm vào thẻ để xem chi tiết</small>
+    </section>
+    <section class="card-face card-back">
+      <h3>你好 <span>nǐ hǎo</span></h3>
+      <p><b>Âm Hán Việt:</b> nhĩ hảo</p>
+      <p><b>Từ tính:</b> cụm chào hỏi</p>
+      <p><b>Nghĩa:</b> xin chào</p>
+      <div class="example">
+        <b>Ví dụ:</b>
+        <div class="ex-han">老师，你好！</div>
+        <div class="ex-py">Lǎoshī, nǐ hǎo!</div>
+        <div class="ex-vi">Thưa thầy/cô, xin chào!</div>
+      </div>
+      <button class="speak-btn" onclick="event.stopPropagation(); speak('老师，你好！')">🔊 Nghe ví dụ</button>
+    </section>
+  </div>
+</article>
+
+
+<article class="flashcard" tabindex="0" aria-label="大家好 - bấm để lật">
+  <div class="card-inner">
+    <section class="card-face card-front">
+      <div class="art" aria-hidden="true">🎉</div>
+      <div class="han">大家好</div>
+      <div class="pinyin">dàjiā hǎo</div>
+      <div class="meaning">xin chào mọi người</div>
+      <button class="speak-btn" onclick="event.stopPropagation(); speak('大家好')">🔊 Nghe từ</button>
+      <small>Bấm vào thẻ để xem chi tiết</small>
+    </section>
+    <section class="card-face card-back">
+      <h3>大家好 <span>dàjiā hǎo</span></h3>
+      <p><b>Âm Hán Việt:</b> đại gia hảo</p>
+      <p><b>Từ tính:</b> cụm chào hỏi</p>
+      <p><b>Nghĩa:</b> xin chào mọi người</p>
+      <div class="example">
+        <b>Ví dụ:</b>
+        <div class="ex-han">大家好，我是老师。</div>
+        <div class="ex-py">Dàjiā hǎo, wǒ shì lǎoshī.</div>
+        <div class="ex-vi">Chào mọi người, tôi là giáo viên.</div>
+      </div>
+      <button class="speak-btn" onclick="event.stopPropagation(); speak('大家好，我是老师。')">🔊 Nghe ví dụ</button>
+    </section>
+  </div>
+</article>
+
+
+<article class="flashcard" tabindex="0" aria-label="再见 - bấm để lật">
+  <div class="card-inner">
+    <section class="card-face card-front">
+      <div class="art" aria-hidden="true">👋</div>
+      <div class="han">再见</div>
+      <div class="pinyin">zàijiàn</div>
+      <div class="meaning">tạm biệt, hẹn gặp lại</div>
+      <button class="speak-btn" onclick="event.stopPropagation(); speak('再见')">🔊 Nghe từ</button>
+      <small>Bấm vào thẻ để xem chi tiết</small>
+    </section>
+    <section class="card-face card-back">
+      <h3>再见 <span>zàijiàn</span></h3>
+      <p><b>Âm Hán Việt:</b> tái kiến</p>
+      <p><b>Từ tính:</b> động từ/cụm chào</p>
+      <p><b>Nghĩa:</b> tạm biệt, hẹn gặp lại</p>
+      <div class="example">
+        <b>Ví dụ:</b>
+        <div class="ex-han">老师，再见！</div>
+        <div class="ex-py">Lǎoshī, zàijiàn!</div>
+        <div class="ex-vi">Tạm biệt thầy/cô!</div>
+      </div>
+      <button class="speak-btn" onclick="event.stopPropagation(); speak('老师，再见！')">🔊 Nghe ví dụ</button>
+    </section>
+  </div>
+</article>
+
+
+<article class="flashcard" tabindex="0" aria-label="老师 - bấm để lật">
+  <div class="card-inner">
+    <section class="card-face card-front">
+      <div class="art" aria-hidden="true">🧑‍🏫</div>
+      <div class="han">老师</div>
+      <div class="pinyin">lǎoshī</div>
+      <div class="meaning">giáo viên, thầy/cô</div>
+      <button class="speak-btn" onclick="event.stopPropagation(); speak('老师')">🔊 Nghe từ</button>
+      <small>Bấm vào thẻ để xem chi tiết</small>
+    </section>
+    <section class="card-face card-back">
+      <h3>老师 <span>lǎoshī</span></h3>
+      <p><b>Âm Hán Việt:</b> lão sư</p>
+      <p><b>Từ tính:</b> danh từ</p>
+      <p><b>Nghĩa:</b> giáo viên, thầy/cô</p>
+      <div class="example">
+        <b>Ví dụ:</b>
+        <div class="ex-han">她是老师。</div>
+        <div class="ex-py">Tā shì lǎoshī.</div>
+        <div class="ex-vi">Cô ấy là giáo viên.</div>
+      </div>
+      <button class="speak-btn" onclick="event.stopPropagation(); speak('她是老师。')">🔊 Nghe ví dụ</button>
+    </section>
+  </div>
+</article>
+
+
+<article class="flashcard" tabindex="0" aria-label="学生 - bấm để lật">
+  <div class="card-inner">
+    <section class="card-face card-front">
+      <div class="art" aria-hidden="true">🎒</div>
+      <div class="han">学生</div>
+      <div class="pinyin">xuésheng</div>
+      <div class="meaning">học sinh, sinh viên</div>
+      <button class="speak-btn" onclick="event.stopPropagation(); speak('学生')">🔊 Nghe từ</button>
+      <small>Bấm vào thẻ để xem chi tiết</small>
+    </section>
+    <section class="card-face card-back">
+      <h3>学生 <span>xuésheng</span></h3>
+      <p><b>Âm Hán Việt:</b> học sinh</p>
+      <p><b>Từ tính:</b> danh từ</p>
+      <p><b>Nghĩa:</b> học sinh, sinh viên</p>
+      <div class="example">
+        <b>Ví dụ:</b>
+        <div class="ex-han">我是学生。</div>
+        <div class="ex-py">Wǒ shì xuésheng.</div>
+        <div class="ex-vi">Tôi là học sinh.</div>
+      </div>
+      <button class="speak-btn" onclick="event.stopPropagation(); speak('我是学生。')">🔊 Nghe ví dụ</button>
+    </section>
+  </div>
+</article>
+
+
+<article class="flashcard" tabindex="0" aria-label="同学 - bấm để lật">
+  <div class="card-inner">
+    <section class="card-face card-front">
+      <div class="art" aria-hidden="true">📚</div>
+      <div class="han">同学</div>
+      <div class="pinyin">tóngxué</div>
+      <div class="meaning">bạn học</div>
+      <button class="speak-btn" onclick="event.stopPropagation(); speak('同学')">🔊 Nghe từ</button>
+      <small>Bấm vào thẻ để xem chi tiết</small>
+    </section>
+    <section class="card-face card-back">
+      <h3>同学 <span>tóngxué</span></h3>
+      <p><b>Âm Hán Việt:</b> đồng học</p>
+      <p><b>Từ tính:</b> danh từ</p>
+      <p><b>Nghĩa:</b> bạn học</p>
+      <div class="example">
+        <b>Ví dụ:</b>
+        <div class="ex-han">他是我的同学。</div>
+        <div class="ex-py">Tā shì wǒ de tóngxué.</div>
+        <div class="ex-vi">Cậu ấy là bạn học của tôi.</div>
+      </div>
+      <button class="speak-btn" onclick="event.stopPropagation(); speak('他是我的同学。')">🔊 Nghe ví dụ</button>
+    </section>
+  </div>
+</article>
+
+
+<article class="flashcard" tabindex="0" aria-label="谢谢 - bấm để lật">
+  <div class="card-inner">
+    <section class="card-face card-front">
+      <div class="art" aria-hidden="true">🙏</div>
+      <div class="han">谢谢</div>
+      <div class="pinyin">xièxie</div>
+      <div class="meaning">cảm ơn</div>
+      <button class="speak-btn" onclick="event.stopPropagation(); speak('谢谢')">🔊 Nghe từ</button>
+      <small>Bấm vào thẻ để xem chi tiết</small>
+    </section>
+    <section class="card-face card-back">
+      <h3>谢谢 <span>xièxie</span></h3>
+      <p><b>Âm Hán Việt:</b> tạ tạ</p>
+      <p><b>Từ tính:</b> động từ/cụm lịch sự</p>
+      <p><b>Nghĩa:</b> cảm ơn</p>
+      <div class="example">
+        <b>Ví dụ:</b>
+        <div class="ex-han">谢谢老师！</div>
+        <div class="ex-py">Xièxie lǎoshī!</div>
+        <div class="ex-vi">Cảm ơn thầy/cô!</div>
+      </div>
+      <button class="speak-btn" onclick="event.stopPropagation(); speak('谢谢老师！')">🔊 Nghe ví dụ</button>
+    </section>
+  </div>
+</article>
+
+
+<article class="flashcard" tabindex="0" aria-label="不客气 - bấm để lật">
+  <div class="card-inner">
+    <section class="card-face card-front">
+      <div class="art" aria-hidden="true">🌷</div>
+      <div class="han">不客气</div>
+      <div class="pinyin">bú kèqi</div>
+      <div class="meaning">không có gì, đừng khách sáo</div>
+      <button class="speak-btn" onclick="event.stopPropagation(); speak('不客气')">🔊 Nghe từ</button>
+      <small>Bấm vào thẻ để xem chi tiết</small>
+    </section>
+    <section class="card-face card-back">
+      <h3>不客气 <span>bú kèqi</span></h3>
+      <p><b>Âm Hán Việt:</b> bất khách khí</p>
+      <p><b>Từ tính:</b> cụm đáp lời</p>
+      <p><b>Nghĩa:</b> không có gì, đừng khách sáo</p>
+      <div class="example">
+        <b>Ví dụ:</b>
+        <div class="ex-han">不客气！</div>
+        <div class="ex-py">Bú kèqi!</div>
+        <div class="ex-vi">Không có gì!</div>
+      </div>
+      <button class="speak-btn" onclick="event.stopPropagation(); speak('不客气！')">🔊 Nghe ví dụ</button>
+    </section>
+  </div>
+</article>
+</div>
+</section>
+
+<section class="main" id="part2">
+  <div class="section-title"><div class="num">2</div><h2><span class="zh">笔顺</span><span class="vi"> · Thứ tự nét và tập viết</span></h2></div>
+  <div class="stroke-panel">
+    <div class="char-picker" id="charPicker"></div>
+    <div class="stroke-layout">
+      <div>
+        <div class="writer-box"><div id="hanziWriter"></div></div>
+        <div class="writer-controls">
+          <button onclick="animateChar()">▶ Hoạt hình nét</button>
+          <button onclick="quizChar()">✍ Kiểm tra viết</button>
+          <button onclick="showOutline()">👁 Hiện chữ mẫu</button>
+        </div>
+      </div>
+      <div class="practice-wrap">
+        <h3>Chế độ tập viết tự do</h3>
+        <p>Dùng chuột hoặc ngón tay viết theo chữ mẫu mờ.</p>
+        <canvas id="practiceCanvas" width="600" height="600"></canvas>
+        <div class="practice-buttons">
+          <button onclick="clearCanvas()">🧽 Xóa nét</button>
+          <button onclick="toggleGuide()">田 Bật/tắt chữ mẫu</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="main" id="part3">
+  <div class="section-title"><div class="num">3</div><h2><span class="zh">句子</span><span class="vi"> · 5 mẫu câu HSK1</span></h2></div>
+  <div class="sentences">
+<div class="sentence-card">
+  <div class="sentence-no">1</div>
+  <div class="sentence-content">
+    <div class="sentence-han">你好，我是学生。</div>
+    <div class="sentence-py">Nǐ hǎo, wǒ shì xuésheng.</div>
+    <div class="sentence-vi">Xin chào, tôi là học sinh.</div>
+  </div>
+  <button class="speak-btn" onclick="speak('你好，我是学生。')">🔊 Nghe câu</button>
+</div>
+
+
+<div class="sentence-card">
+  <div class="sentence-no">2</div>
+  <div class="sentence-content">
+    <div class="sentence-han">大家好，我们是同学。</div>
+    <div class="sentence-py">Dàjiā hǎo, wǒmen shì tóngxué.</div>
+    <div class="sentence-vi">Chào mọi người, chúng tôi là bạn học.</div>
+  </div>
+  <button class="speak-btn" onclick="speak('大家好，我们是同学。')">🔊 Nghe câu</button>
+</div>
+
+
+<div class="sentence-card">
+  <div class="sentence-no">3</div>
+  <div class="sentence-content">
+    <div class="sentence-han">老师，您好！</div>
+    <div class="sentence-py">Lǎoshī, nín hǎo!</div>
+    <div class="sentence-vi">Thưa thầy/cô, xin chào!</div>
+  </div>
+  <button class="speak-btn" onclick="speak('老师，您好！')">🔊 Nghe câu</button>
+</div>
+
+
+<div class="sentence-card">
+  <div class="sentence-no">4</div>
+  <div class="sentence-content">
+    <div class="sentence-han">谢谢老师！</div>
+    <div class="sentence-py">Xièxie lǎoshī!</div>
+    <div class="sentence-vi">Cảm ơn thầy/cô!</div>
+  </div>
+  <button class="speak-btn" onclick="speak('谢谢老师！')">🔊 Nghe câu</button>
+</div>
+
+
+<div class="sentence-card">
+  <div class="sentence-no">5</div>
+  <div class="sentence-content">
+    <div class="sentence-han">同学们，再见！</div>
+    <div class="sentence-py">Tóngxuémen, zàijiàn!</div>
+    <div class="sentence-vi">Các bạn học, tạm biệt!</div>
+  </div>
+  <button class="speak-btn" onclick="speak('同学们，再见！')">🔊 Nghe câu</button>
+</div>
+</div>
+</section>
+
+<footer>
+  <div><span class="zh">加油！</span><span class="vi">Mỗi ngày học một ít, tiến bộ một chút 🌟</span></div>
+  <div style="margin-top:10px;font-size:16px;">
+    Tiếng Trung Minxian (Minxian.chinese) &nbsp; | &nbsp; Zalo: 0833312711
+  </div>
+</footer>
+
+<script>
+const chars = ['你', '我', '好', '大', '家', '再', '见', '老', '师', '学', '生', '同', '谢', '不', '客', '气'];
+let currentChar = chars[0];
+let writer;
+let guideOn = true;
+
+function speak(text) {
+  if (!('speechSynthesis' in window)) {
+    alert('Trình duyệt này chưa hỗ trợ đọc văn bản.');
+    return;
+  }
+  speechSynthesis.cancel();
+  const u = new SpeechSynthesisUtterance(text);
+  u.lang = 'zh-CN';
+  u.rate = 0.78;
+  u.pitch = 1.05;
+  speechSynthesis.speak(u);
+}
+
+document.querySelectorAll('.flashcard').forEach(card => {
+  card.addEventListener('click', () => card.classList.toggle('flipped'));
+  card.addEventListener('keydown', e => {
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault();
+      card.classList.toggle('flipped');
+    }
+  });
+});
+
+function initPicker() {
+  const box = document.getElementById('charPicker');
+  chars.forEach((ch,i) => {
+    const b = document.createElement('button');
+    b.textContent = ch;
+    if(i===0) b.classList.add('active');
+    b.onclick = () => {
+      document.querySelectorAll('.char-picker button').forEach(x=>x.classList.remove('active'));
+      b.classList.add('active');
+      currentChar = ch;
+      loadWriter();
+      drawPracticeGuide();
+    };
+    box.appendChild(b);
+  });
+}
+
+function loadWriter() {
+  const host = document.getElementById('hanziWriter');
+  host.innerHTML = '';
+  if (typeof HanziWriter === 'undefined') {
+    host.innerHTML = '<p style="padding:20px;text-align:center">Cần kết nối Internet để tải hoạt hình thứ tự nét.</p>';
+    return;
+  }
+  const size = Math.min(400, Math.max(300, window.innerWidth - 70));
+  writer = HanziWriter.create('hanziWriter', currentChar, {
+    width:size,height:size,padding:15,
+    showOutline:true,showCharacter:false,
+    strokeAnimationSpeed:1,delayBetweenStrokes:250,
+    radicalColor:'#e34a6f',
+    strokeColor:'#263238',
+    outlineColor:'#d7dce2'
+  });
+}
+function animateChar(){ if(writer) writer.animateCharacter(); }
+function quizChar(){ if(writer) writer.quiz({showHintAfterMisses:2, highlightOnComplete:true}); }
+function showOutline(){ if(writer) writer.showCharacter(); }
+
+const canvas = document.getElementById('practiceCanvas');
+const ctx = canvas.getContext('2d');
+let drawing = false;
+
+function getPos(e) {
+  const r = canvas.getBoundingClientRect();
+  const p = e.touches ? e.touches[0] : e;
+  return {x:(p.clientX-r.left)*canvas.width/r.width, y:(p.clientY-r.top)*canvas.height/r.height};
+}
+function startDraw(e) {
+  drawing=true; const p=getPos(e); ctx.beginPath(); ctx.moveTo(p.x,p.y); e.preventDefault();
+}
+function moveDraw(e) {
+  if(!drawing) return; const p=getPos(e);
+  ctx.lineWidth=18;ctx.lineCap='round';ctx.lineJoin='round';ctx.strokeStyle='#263238';
+  ctx.lineTo(p.x,p.y);ctx.stroke();e.preventDefault();
+}
+function endDraw(){drawing=false;ctx.closePath();}
+canvas.addEventListener('mousedown',startDraw);canvas.addEventListener('mousemove',moveDraw);
+window.addEventListener('mouseup',endDraw);
+canvas.addEventListener('touchstart',startDraw,{passive:false});
+canvas.addEventListener('touchmove',moveDraw,{passive:false});
+canvas.addEventListener('touchend',endDraw);
+
+function drawPracticeGuide() {
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+  ctx.save();
+  ctx.strokeStyle='#d8e0ea';ctx.lineWidth=2;ctx.setLineDash([10,10]);
+  ctx.beginPath();ctx.moveTo(300,0);ctx.lineTo(300,600);ctx.moveTo(0,300);ctx.lineTo(600,300);
+  ctx.moveTo(0,0);ctx.lineTo(600,600);ctx.moveTo(600,0);ctx.lineTo(0,600);ctx.stroke();
+  ctx.setLineDash([]);
+  if(guideOn){
+    ctx.globalAlpha=.16;ctx.fillStyle='#e34a6f';ctx.font='480px "LXGW WenKai", STKaiti, KaiTi, serif';
+    ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillText(currentChar,300,330);
+  }
+  ctx.restore();
+}
+function clearCanvas(){drawPracticeGuide();}
+function toggleGuide(){guideOn=!guideOn;drawPracticeGuide();}
+
+initPicker();loadWriter();drawPracticeGuide();
+</script>
+</body>
+</html>
