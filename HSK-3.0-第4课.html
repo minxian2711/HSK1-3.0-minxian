@@ -1,0 +1,916 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>第4课 我有两个孩子</title>
+<script src="https://cdn.jsdelivr.net/npm/hanzi-writer@3.7/dist/hanzi-writer.min.js"></script>
+<style>
+:root {
+  --ink:#172033; --paper:#fffdf6; --accent:#ff6b6b; --yellow:#fff59d;
+  --blue:#dff3ff; --green:#dff8e8; --purple:#eee5ff; --shadow:0 12px 28px rgba(29,44,75,.12);
+}
+* { box-sizing:border-box; }
+body {
+  margin:0; color:var(--ink); background:linear-gradient(135deg,#fff8dc,#eff8ff 45%,#f8efff);
+  font-family:"Times New Roman",serif;
+}
+header {
+  padding:34px 18px 24px; text-align:center;
+  background:radial-gradient(circle at top left,#fff9a8,#ffd7e3 48%,#d9eeff);
+}
+header h1 { margin:0; font-size:clamp(30px,5vw,56px); }
+header p { font-size:19px; margin:10px auto; max-width:900px; }
+.reference { max-width:760px; width:92%; border-radius:20px; box-shadow:var(--shadow); margin-top:16px; }
+nav { position:sticky; top:0; z-index:20; background:rgba(255,255,255,.92); backdrop-filter:blur(12px); padding:10px; text-align:center; box-shadow:0 4px 16px rgba(0,0,0,.08); }
+nav a { display:inline-block; margin:4px; padding:9px 14px; border-radius:999px; text-decoration:none; color:var(--ink); background:#fff3b0; font-weight:bold; }
+main { max-width:1200px; margin:auto; padding:24px; }
+section { margin:28px 0 48px; }
+.section-title { font-size:34px; margin-bottom:12px; }
+.note { background:#fff; padding:14px 18px; border-left:6px solid var(--accent); border-radius:14px; box-shadow:var(--shadow); }
+.search-wrap { margin:18px 0; }
+#search { width:100%; padding:14px 18px; border-radius:16px; border:2px solid #d8ddea; font-size:18px; }
+.grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(235px,1fr)); gap:18px; }
+.vocab-card {
+  position:relative; min-height:305px; background:white; border-radius:22px; padding:18px;
+  box-shadow:var(--shadow); cursor:pointer; transition:.25s transform,.25s box-shadow; overflow:hidden;
+}
+.vocab-card:hover { transform:translateY(-5px); }
+.card-front,.card-back { transition:.25s; }
+.card-back { display:none; font-size:17px; line-height:1.45; }
+.vocab-card.open .card-front { display:none; }
+.vocab-card.open .card-back { display:block; }
+.icon { font-size:64px; text-align:center; margin-top:10px; }
+.hanzi,.sentence-cn,.grammar-cn,.char-btn {
+  font-family:KaiTi,"STKaiti","Noto Serif CJK SC",serif;
+}
+.hanzi { font-size:62px; text-align:center; color:#d7263d; margin:8px 0; }
+.tap { text-align:center; color:#6c7382; }
+.pinyin{font-family:"Heiti SC","STHeiti","PingFang SC","Microsoft YaHei",Arial,sans-serif;font-size:25px;color:#1c6dd0;font-weight:bold;margin-bottom:10px;}
+.example { margin-top:12px; padding:10px; background:#f6f8ff; border-radius:12px; }
+.example span { color:#1c6dd0; }
+.audio-group {
+  position:absolute; right:12px; bottom:12px; display:flex; gap:7px;
+}
+.audio-btn {
+  position:static; border:0; border-radius:999px; padding:8px 11px;
+  color:white; cursor:pointer; font-family:"Times New Roman",serif;
+}
+.audio-btn.slow { background:#1c6dd0; }
+.audio-btn.normal { background:#172033; }
+.audio-btn:disabled { opacity:.65; cursor:wait; }
+.grammar-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:18px; }
+.grammar-box { background:white; border-radius:20px; padding:20px; box-shadow:var(--shadow); }
+.grammar-box:nth-child(1) { background:var(--blue); }
+.grammar-box:nth-child(2) { background:var(--green); }
+.grammar-box:nth-child(3) { background:var(--purple); }
+.grammar-cn { font-size:27px; color:#b11d39; margin:10px 0; }
+.pattern { padding:10px 12px; background:rgba(255,255,255,.65); border-radius:12px; margin:8px 0; }
+.stroke-panel { background:white; border-radius:22px; padding:20px; box-shadow:var(--shadow); }
+.char-list { display:flex; flex-wrap:wrap; gap:8px; margin-bottom:16px; }
+.char-btn { border:0; background:#fff2a8; border-radius:10px; font-size:26px; padding:7px 12px; cursor:pointer; }
+.char-btn:hover { background:#ffd3de; }
+#stroke-search {
+  width:100%; padding:13px 16px; border:2px solid #d8ddea; border-radius:14px;
+  font-size:18px; margin:8px 0 14px;
+}
+.word-list { display:flex; flex-wrap:wrap; gap:9px; margin-bottom:16px; }
+.word-btn {
+  border:0; background:#e8f5ff; border-radius:999px; font-size:22px;
+  padding:8px 15px; cursor:pointer; font-family:KaiTi,"STKaiti","Noto Serif CJK SC",serif;
+}
+.word-btn:hover,.word-btn.active { background:#ffd3de; }
+#stroke-word-title {
+  text-align:center; font-size:38px; color:#b11d39; margin:10px 0 4px;
+  font-family:KaiTi,"STKaiti","Noto Serif CJK SC",serif;
+}
+#stroke-word-pinyin { text-align:center; color:#1c6dd0; font-size:20px; margin-bottom:14px; }
+#stroke-targets {
+  display:flex; flex-wrap:wrap; justify-content:center; gap:14px; margin:12px auto;
+}
+.stroke-char-box {
+  width:220px; min-height:255px; border:2px dashed #ccd2df; border-radius:18px;
+  padding:8px; background:#fff;
+}
+.stroke-char-label {
+  text-align:center; font-size:26px; margin-bottom:4px;
+  font-family:KaiTi,"STKaiti","Noto Serif CJK SC",serif;
+}
+.stroke-canvas { width:200px; height:200px; margin:auto; }
+.stroke-controls { text-align:center; }
+.stroke-controls button { margin:5px; padding:10px 16px; border:0; border-radius:999px; cursor:pointer; font-weight:bold; }
+.sentence-list { display:grid; gap:12px; }
+.sentence-card { background:white; border-radius:16px; padding:16px 18px; box-shadow:var(--shadow); cursor:pointer; }
+.sentence-cn { font-size:27px; }
+.sentence-hint { color:#777; margin-top:4px; }
+.sentence-answer { display:none; border-top:1px dashed #ccd2df; margin-top:10px; padding-top:10px; font-size:18px; }
+.sentence-answer div:first-child { color:#1c6dd0; font-weight:bold; }
+.sentence-card.open .sentence-answer { display:block; }
+footer { text-align:center; padding:28px; color:#667; }
+@media(max-width:600px) {
+  main { padding:15px; } .section-title { font-size:28px; }
+  .stroke-char-box { width:175px; min-height:210px; }
+  .stroke-canvas { width:155px; height:155px; }
+}
+
+.vi,body,footer,.note,.sentence-answer,.sentence-hint,.pattern div,.audio-btn{font-family:"Times New Roman",serif;}
+.hanzi,.sentence-cn,.grammar-cn,.char-btn,#stroke-word-title,.stroke-char-label,.word-btn,header h1{font-family:"KaiTi","STKaiti","Noto Serif CJK SC",serif;}
+#stroke-word-pinyin,.pinyin{font-family:"Heiti SC","STHeiti","PingFang SC","Microsoft YaHei",Arial,sans-serif;font-weight:700;}
+
+</style>
+</head>
+<body>
+<header>
+  <h1>第4课 我有两个孩子</h1>
+  <p>Bài học tương tác: từ vựng – ngữ pháp – mẫu câu – nghe phát âm – thứ tự nét</p>
+</header>
+<nav>
+  <a href="#vocab">Từ vựng</a><a href="#stroke">笔顺</a><a href="#grammar">Ngữ pháp</a><a href="#sentences">Mẫu câu</a>
+</nav>
+<main>
+<section id="vocab">
+  <h2 class="section-title">Phần 1. Từ đã học</h2>
+  <div class="note">Bấm vào từng thẻ để hiện <b>pinyin, âm Hán Việt, nghĩa, từ tính và ví dụ</b>. Mỗi từ có hai tốc độ nghe. Hệ thống ưu tiên giọng 普通话 zh-CN chuẩn có sẵn trên trình duyệt/thiết bị.</div>
+  
+  <div class="note" style="margin-top:12px">
+    <b>Lưu ý giọng đọc:</b> nên mở bằng Chrome hoặc Edge. Trình duyệt sẽ tự chọn giọng Trung Quốc đại lục
+    <b>zh-CN / 普通话</b> tốt nhất có trên máy. Chất giọng thực tế phụ thuộc bộ giọng đã cài trên thiết bị.
+  </div>
+  <div class="search-wrap"><input id="search" placeholder="🔎 Tìm theo chữ Hán, pinyin, nghĩa hoặc từ tính..." oninput="filterCards()"></div>
+  <div class="grid">
+    <article class="vocab-card" data-search="有 yǒu hữu có động từ" onclick="toggleCard(this)">
+      <div class="card-front">
+        <div class="icon">📦</div>
+        <div class="hanzi">有</div>
+        <div class="tap">Chạm để xem nghĩa</div>
+      </div>
+      <div class="card-back">
+        <div class="pinyin">yǒu</div>
+        <div><b>Âm Hán Việt:</b> hữu</div>
+        <div><b>Nghĩa:</b> có</div>
+        <div><b>Từ tính:</b> động từ</div>
+        <div class="example"><b>Ví dụ:</b> 我有一本书。<br><span>Wǒ yǒu yì běn shū.</span><br>Tôi có một quyển sách.</div>
+      </div>
+      
+      <div class="audio-group" onclick="event.stopPropagation()">
+        <button class="audio-btn slow" onclick="speakMandarin('有',0.72,this)">🔊 Chậm</button>
+        <button class="audio-btn normal" onclick="speakMandarin('有',0.92,this)">🔊 Bình thường</button>
+      </div>
+    </article>
+    
+    <article class="vocab-card" data-search="没有 méiyǒu một hữu không có động từ" onclick="toggleCard(this)">
+      <div class="card-front">
+        <div class="icon">🚫</div>
+        <div class="hanzi">没有</div>
+        <div class="tap">Chạm để xem nghĩa</div>
+      </div>
+      <div class="card-back">
+        <div class="pinyin">méiyǒu</div>
+        <div><b>Âm Hán Việt:</b> một hữu</div>
+        <div><b>Nghĩa:</b> không có</div>
+        <div><b>Từ tính:</b> động từ</div>
+        <div class="example"><b>Ví dụ:</b> 我没有猫。<br><span>Wǒ méiyǒu māo.</span><br>Tôi không có mèo.</div>
+      </div>
+      
+      <div class="audio-group" onclick="event.stopPropagation()">
+        <button class="audio-btn slow" onclick="speakMandarin('没有',0.72,this)">🔊 Chậm</button>
+        <button class="audio-btn normal" onclick="speakMandarin('没有',0.92,this)">🔊 Bình thường</button>
+      </div>
+    </article>
+    
+    <article class="vocab-card" data-search="猫 māo miêu con mèo danh từ" onclick="toggleCard(this)">
+      <div class="card-front">
+        <div class="icon">🐱</div>
+        <div class="hanzi">猫</div>
+        <div class="tap">Chạm để xem nghĩa</div>
+      </div>
+      <div class="card-back">
+        <div class="pinyin">māo</div>
+        <div><b>Âm Hán Việt:</b> miêu</div>
+        <div><b>Nghĩa:</b> con mèo</div>
+        <div><b>Từ tính:</b> danh từ</div>
+        <div class="example"><b>Ví dụ:</b> 我家有一只猫。<br><span>Wǒ jiā yǒu yì zhī māo.</span><br>Nhà tôi có một con mèo.</div>
+      </div>
+      
+      <div class="audio-group" onclick="event.stopPropagation()">
+        <button class="audio-btn slow" onclick="speakMandarin('猫',0.72,this)">🔊 Chậm</button>
+        <button class="audio-btn normal" onclick="speakMandarin('猫',0.92,this)">🔊 Bình thường</button>
+      </div>
+    </article>
+    
+    <article class="vocab-card" data-search="苹果 píngguǒ bình quả quả táo danh từ" onclick="toggleCard(this)">
+      <div class="card-front">
+        <div class="icon">🍎</div>
+        <div class="hanzi">苹果</div>
+        <div class="tap">Chạm để xem nghĩa</div>
+      </div>
+      <div class="card-back">
+        <div class="pinyin">píngguǒ</div>
+        <div><b>Âm Hán Việt:</b> bình quả</div>
+        <div><b>Nghĩa:</b> quả táo</div>
+        <div><b>Từ tính:</b> danh từ</div>
+        <div class="example"><b>Ví dụ:</b> 我喜欢吃苹果。<br><span>Wǒ xǐhuan chī píngguǒ.</span><br>Tôi thích ăn táo.</div>
+      </div>
+      
+      <div class="audio-group" onclick="event.stopPropagation()">
+        <button class="audio-btn slow" onclick="speakMandarin('苹果',0.72,this)">🔊 Chậm</button>
+        <button class="audio-btn normal" onclick="speakMandarin('苹果',0.92,this)">🔊 Bình thường</button>
+      </div>
+    </article>
+    
+    <article class="vocab-card" data-search="多少 duōshao đa thiểu bao nhiêu đại từ nghi vấn" onclick="toggleCard(this)">
+      <div class="card-front">
+        <div class="icon">🔢</div>
+        <div class="hanzi">多少</div>
+        <div class="tap">Chạm để xem nghĩa</div>
+      </div>
+      <div class="card-back">
+        <div class="pinyin">duōshao</div>
+        <div><b>Âm Hán Việt:</b> đa thiểu</div>
+        <div><b>Nghĩa:</b> bao nhiêu</div>
+        <div><b>Từ tính:</b> đại từ nghi vấn</div>
+        <div class="example"><b>Ví dụ:</b> 你学校有多少学生？<br><span>Nǐ xuéxiào yǒu duōshao xuésheng?</span><br>Trường bạn có bao nhiêu học sinh?</div>
+      </div>
+      
+      <div class="audio-group" onclick="event.stopPropagation()">
+        <button class="audio-btn slow" onclick="speakMandarin('多少',0.72,this)">🔊 Chậm</button>
+        <button class="audio-btn normal" onclick="speakMandarin('多少',0.92,this)">🔊 Bình thường</button>
+      </div>
+    </article>
+    
+    <article class="vocab-card" data-search="个 gè cá cái, người (lượng từ phổ biến) lượng từ" onclick="toggleCard(this)">
+      <div class="card-front">
+        <div class="icon">1️⃣</div>
+        <div class="hanzi">个</div>
+        <div class="tap">Chạm để xem nghĩa</div>
+      </div>
+      <div class="card-back">
+        <div class="pinyin">gè</div>
+        <div><b>Âm Hán Việt:</b> cá</div>
+        <div><b>Nghĩa:</b> cái, người (lượng từ phổ biến)</div>
+        <div><b>Từ tính:</b> lượng từ</div>
+        <div class="example"><b>Ví dụ:</b> 我有一个苹果。<br><span>Wǒ yǒu yí ge píngguǒ.</span><br>Tôi có một quả táo.</div>
+      </div>
+      
+      <div class="audio-group" onclick="event.stopPropagation()">
+        <button class="audio-btn slow" onclick="speakMandarin('个',0.72,this)">🔊 Chậm</button>
+        <button class="audio-btn normal" onclick="speakMandarin('个',0.92,this)">🔊 Bình thường</button>
+      </div>
+    </article>
+    
+    <article class="vocab-card" data-search="钱 qián tiền tiền danh từ" onclick="toggleCard(this)">
+      <div class="card-front">
+        <div class="icon">💴</div>
+        <div class="hanzi">钱</div>
+        <div class="tap">Chạm để xem nghĩa</div>
+      </div>
+      <div class="card-back">
+        <div class="pinyin">qián</div>
+        <div><b>Âm Hán Việt:</b> tiền</div>
+        <div><b>Nghĩa:</b> tiền</div>
+        <div><b>Từ tính:</b> danh từ</div>
+        <div class="example"><b>Ví dụ:</b> 这部手机多少钱？<br><span>Zhè bù shǒujī duōshao qián?</span><br>Chiếc điện thoại này bao nhiêu tiền?</div>
+      </div>
+      
+      <div class="audio-group" onclick="event.stopPropagation()">
+        <button class="audio-btn slow" onclick="speakMandarin('钱',0.72,this)">🔊 Chậm</button>
+        <button class="audio-btn normal" onclick="speakMandarin('钱',0.92,this)">🔊 Bình thường</button>
+      </div>
+    </article>
+    
+    <article class="vocab-card" data-search="呢 ne ni thì sao, còn…? trợ từ ngữ khí" onclick="toggleCard(this)">
+      <div class="card-front">
+        <div class="icon">💬</div>
+        <div class="hanzi">呢</div>
+        <div class="tap">Chạm để xem nghĩa</div>
+      </div>
+      <div class="card-back">
+        <div class="pinyin">ne</div>
+        <div><b>Âm Hán Việt:</b> ni</div>
+        <div><b>Nghĩa:</b> thì sao, còn…?</div>
+        <div><b>Từ tính:</b> trợ từ ngữ khí</div>
+        <div class="example"><b>Ví dụ:</b> 我很好，你呢？<br><span>Wǒ hěn hǎo, nǐ ne?</span><br>Tôi rất khỏe, còn bạn thì sao?</div>
+      </div>
+      
+      <div class="audio-group" onclick="event.stopPropagation()">
+        <button class="audio-btn slow" onclick="speakMandarin('呢',0.72,this)">🔊 Chậm</button>
+        <button class="audio-btn normal" onclick="speakMandarin('呢',0.92,this)">🔊 Bình thường</button>
+      </div>
+    </article>
+    
+    <article class="vocab-card" data-search="没 méi một không, chưa phó từ" onclick="toggleCard(this)">
+      <div class="card-front">
+        <div class="icon">❌</div>
+        <div class="hanzi">没</div>
+        <div class="tap">Chạm để xem nghĩa</div>
+      </div>
+      <div class="card-back">
+        <div class="pinyin">méi</div>
+        <div><b>Âm Hán Việt:</b> một</div>
+        <div><b>Nghĩa:</b> không, chưa</div>
+        <div><b>Từ tính:</b> phó từ</div>
+        <div class="example"><b>Ví dụ:</b> 我没时间。<br><span>Wǒ méi shíjiān.</span><br>Tôi không có thời gian.</div>
+      </div>
+      
+      <div class="audio-group" onclick="event.stopPropagation()">
+        <button class="audio-btn slow" onclick="speakMandarin('没',0.72,this)">🔊 Chậm</button>
+        <button class="audio-btn normal" onclick="speakMandarin('没',0.92,this)">🔊 Bình thường</button>
+      </div>
+    </article>
+    
+    <article class="vocab-card" data-search="家 jiā gia nhà, gia đình danh từ" onclick="toggleCard(this)">
+      <div class="card-front">
+        <div class="icon">🏠</div>
+        <div class="hanzi">家</div>
+        <div class="tap">Chạm để xem nghĩa</div>
+      </div>
+      <div class="card-back">
+        <div class="pinyin">jiā</div>
+        <div><b>Âm Hán Việt:</b> gia</div>
+        <div><b>Nghĩa:</b> nhà, gia đình</div>
+        <div><b>Từ tính:</b> danh từ</div>
+        <div class="example"><b>Ví dụ:</b> 我家有四口人。<br><span>Wǒ jiā yǒu sì kǒu rén.</span><br>Nhà tôi có bốn người.</div>
+      </div>
+      
+      <div class="audio-group" onclick="event.stopPropagation()">
+        <button class="audio-btn slow" onclick="speakMandarin('家',0.72,this)">🔊 Chậm</button>
+        <button class="audio-btn normal" onclick="speakMandarin('家',0.92,this)">🔊 Bình thường</button>
+      </div>
+    </article>
+    
+    <article class="vocab-card" data-search="几 jǐ kỷ mấy, bao nhiêu (số lượng ít) đại từ nghi vấn" onclick="toggleCard(this)">
+      <div class="card-front">
+        <div class="icon">❓</div>
+        <div class="hanzi">几</div>
+        <div class="tap">Chạm để xem nghĩa</div>
+      </div>
+      <div class="card-back">
+        <div class="pinyin">jǐ</div>
+        <div><b>Âm Hán Việt:</b> kỷ</div>
+        <div><b>Nghĩa:</b> mấy, bao nhiêu (số lượng ít)</div>
+        <div><b>Từ tính:</b> đại từ nghi vấn</div>
+        <div class="example"><b>Ví dụ:</b> 你家有几口人？<br><span>Nǐ jiā yǒu jǐ kǒu rén?</span><br>Nhà bạn có mấy người?</div>
+      </div>
+      
+      <div class="audio-group" onclick="event.stopPropagation()">
+        <button class="audio-btn slow" onclick="speakMandarin('几',0.72,this)">🔊 Chậm</button>
+        <button class="audio-btn normal" onclick="speakMandarin('几',0.92,this)">🔊 Bình thường</button>
+      </div>
+    </article>
+    
+    <article class="vocab-card" data-search="口 kǒu khẩu miệng; lượng từ đếm người trong gia đình danh từ/lượng từ" onclick="toggleCard(this)">
+      <div class="card-front">
+        <div class="icon">👨‍👩‍👧‍👦</div>
+        <div class="hanzi">口</div>
+        <div class="tap">Chạm để xem nghĩa</div>
+      </div>
+      <div class="card-back">
+        <div class="pinyin">kǒu</div>
+        <div><b>Âm Hán Việt:</b> khẩu</div>
+        <div><b>Nghĩa:</b> miệng; lượng từ đếm người trong gia đình</div>
+        <div><b>Từ tính:</b> danh từ/lượng từ</div>
+        <div class="example"><b>Ví dụ:</b> 我家有五口人。<br><span>Wǒ jiā yǒu wǔ kǒu rén.</span><br>Nhà tôi có năm người.</div>
+      </div>
+      
+      <div class="audio-group" onclick="event.stopPropagation()">
+        <button class="audio-btn slow" onclick="speakMandarin('口',0.72,this)">🔊 Chậm</button>
+        <button class="audio-btn normal" onclick="speakMandarin('口',0.92,this)">🔊 Bình thường</button>
+      </div>
+    </article>
+    
+    <article class="vocab-card" data-search="奶奶 nǎinai nãi nãi bà nội danh từ" onclick="toggleCard(this)">
+      <div class="card-front">
+        <div class="icon">👵</div>
+        <div class="hanzi">奶奶</div>
+        <div class="tap">Chạm để xem nghĩa</div>
+      </div>
+      <div class="card-back">
+        <div class="pinyin">nǎinai</div>
+        <div><b>Âm Hán Việt:</b> nãi nãi</div>
+        <div><b>Nghĩa:</b> bà nội</div>
+        <div><b>Từ tính:</b> danh từ</div>
+        <div class="example"><b>Ví dụ:</b> 我奶奶很好。<br><span>Wǒ nǎinai hěn hǎo.</span><br>Bà nội tôi rất khỏe.</div>
+      </div>
+      
+      <div class="audio-group" onclick="event.stopPropagation()">
+        <button class="audio-btn slow" onclick="speakMandarin('奶奶',0.72,this)">🔊 Chậm</button>
+        <button class="audio-btn normal" onclick="speakMandarin('奶奶',0.92,this)">🔊 Bình thường</button>
+      </div>
+    </article>
+    
+    <article class="vocab-card" data-search="爷爷 yéye gia gia ông nội danh từ" onclick="toggleCard(this)">
+      <div class="card-front">
+        <div class="icon">👴</div>
+        <div class="hanzi">爷爷</div>
+        <div class="tap">Chạm để xem nghĩa</div>
+      </div>
+      <div class="card-back">
+        <div class="pinyin">yéye</div>
+        <div><b>Âm Hán Việt:</b> gia gia</div>
+        <div><b>Nghĩa:</b> ông nội</div>
+        <div><b>Từ tính:</b> danh từ</div>
+        <div class="example"><b>Ví dụ:</b> 我爷爷喜欢看书。<br><span>Wǒ yéye xǐhuan kàn shū.</span><br>Ông nội tôi thích đọc sách.</div>
+      </div>
+      
+      <div class="audio-group" onclick="event.stopPropagation()">
+        <button class="audio-btn slow" onclick="speakMandarin('爷爷',0.72,this)">🔊 Chậm</button>
+        <button class="audio-btn normal" onclick="speakMandarin('爷爷',0.92,this)">🔊 Bình thường</button>
+      </div>
+    </article>
+    
+    <article class="vocab-card" data-search="爸爸 bàba ba ba bố, ba danh từ" onclick="toggleCard(this)">
+      <div class="card-front">
+        <div class="icon">👨</div>
+        <div class="hanzi">爸爸</div>
+        <div class="tap">Chạm để xem nghĩa</div>
+      </div>
+      <div class="card-back">
+        <div class="pinyin">bàba</div>
+        <div><b>Âm Hán Việt:</b> ba ba</div>
+        <div><b>Nghĩa:</b> bố, ba</div>
+        <div><b>Từ tính:</b> danh từ</div>
+        <div class="example"><b>Ví dụ:</b> 我爸爸是医生。<br><span>Wǒ bàba shì yīshēng.</span><br>Bố tôi là bác sĩ.</div>
+      </div>
+      
+      <div class="audio-group" onclick="event.stopPropagation()">
+        <button class="audio-btn slow" onclick="speakMandarin('爸爸',0.72,this)">🔊 Chậm</button>
+        <button class="audio-btn normal" onclick="speakMandarin('爸爸',0.92,this)">🔊 Bình thường</button>
+      </div>
+    </article>
+    
+    <article class="vocab-card" data-search="妈妈 māma mẫu mẹ danh từ" onclick="toggleCard(this)">
+      <div class="card-front">
+        <div class="icon">👩</div>
+        <div class="hanzi">妈妈</div>
+        <div class="tap">Chạm để xem nghĩa</div>
+      </div>
+      <div class="card-back">
+        <div class="pinyin">māma</div>
+        <div><b>Âm Hán Việt:</b> mẫu</div>
+        <div><b>Nghĩa:</b> mẹ</div>
+        <div><b>Từ tính:</b> danh từ</div>
+        <div class="example"><b>Ví dụ:</b> 我妈妈很忙。<br><span>Wǒ māma hěn máng.</span><br>Mẹ tôi rất bận.</div>
+      </div>
+      
+      <div class="audio-group" onclick="event.stopPropagation()">
+        <button class="audio-btn slow" onclick="speakMandarin('妈妈',0.72,this)">🔊 Chậm</button>
+        <button class="audio-btn normal" onclick="speakMandarin('妈妈',0.92,this)">🔊 Bình thường</button>
+      </div>
+    </article>
+    
+    <article class="vocab-card" data-search="妹妹 mèimei muội muội em gái danh từ" onclick="toggleCard(this)">
+      <div class="card-front">
+        <div class="icon">👧</div>
+        <div class="hanzi">妹妹</div>
+        <div class="tap">Chạm để xem nghĩa</div>
+      </div>
+      <div class="card-back">
+        <div class="pinyin">mèimei</div>
+        <div><b>Âm Hán Việt:</b> muội muội</div>
+        <div><b>Nghĩa:</b> em gái</div>
+        <div><b>Từ tính:</b> danh từ</div>
+        <div class="example"><b>Ví dụ:</b> 我妹妹今年八岁。<br><span>Wǒ mèimei jīnnián bā suì.</span><br>Em gái tôi năm nay tám tuổi.</div>
+      </div>
+      
+      <div class="audio-group" onclick="event.stopPropagation()">
+        <button class="audio-btn slow" onclick="speakMandarin('妹妹',0.72,this)">🔊 Chậm</button>
+        <button class="audio-btn normal" onclick="speakMandarin('妹妹',0.92,this)">🔊 Bình thường</button>
+      </div>
+    </article>
+    
+    <article class="vocab-card" data-search="哥哥 gēge ca ca anh trai danh từ" onclick="toggleCard(this)">
+      <div class="card-front">
+        <div class="icon">🧑</div>
+        <div class="hanzi">哥哥</div>
+        <div class="tap">Chạm để xem nghĩa</div>
+      </div>
+      <div class="card-back">
+        <div class="pinyin">gēge</div>
+        <div><b>Âm Hán Việt:</b> ca ca</div>
+        <div><b>Nghĩa:</b> anh trai</div>
+        <div><b>Từ tính:</b> danh từ</div>
+        <div class="example"><b>Ví dụ:</b> 我哥哥在学校工作。<br><span>Wǒ gēge zài xuéxiào gōngzuò.</span><br>Anh trai tôi làm việc ở trường.</div>
+      </div>
+      
+      <div class="audio-group" onclick="event.stopPropagation()">
+        <button class="audio-btn slow" onclick="speakMandarin('哥哥',0.72,this)">🔊 Chậm</button>
+        <button class="audio-btn normal" onclick="speakMandarin('哥哥',0.92,this)">🔊 Bình thường</button>
+      </div>
+    </article>
+    
+    <article class="vocab-card" data-search="和 hé hòa và, với liên từ/giới từ" onclick="toggleCard(this)">
+      <div class="card-front">
+        <div class="icon">➕</div>
+        <div class="hanzi">和</div>
+        <div class="tap">Chạm để xem nghĩa</div>
+      </div>
+      <div class="card-back">
+        <div class="pinyin">hé</div>
+        <div><b>Âm Hán Việt:</b> hòa</div>
+        <div><b>Nghĩa:</b> và, với</div>
+        <div><b>Từ tính:</b> liên từ/giới từ</div>
+        <div class="example"><b>Ví dụ:</b> 我和妈妈去学校。<br><span>Wǒ hé māma qù xuéxiào.</span><br>Tôi và mẹ đi đến trường.</div>
+      </div>
+      
+      <div class="audio-group" onclick="event.stopPropagation()">
+        <button class="audio-btn slow" onclick="speakMandarin('和',0.72,this)">🔊 Chậm</button>
+        <button class="audio-btn normal" onclick="speakMandarin('和',0.92,this)">🔊 Bình thường</button>
+      </div>
+    </article>
+    
+    <article class="vocab-card" data-search="儿子 érzi nhi tử con trai danh từ" onclick="toggleCard(this)">
+      <div class="card-front">
+        <div class="icon">👦</div>
+        <div class="hanzi">儿子</div>
+        <div class="tap">Chạm để xem nghĩa</div>
+      </div>
+      <div class="card-back">
+        <div class="pinyin">érzi</div>
+        <div><b>Âm Hán Việt:</b> nhi tử</div>
+        <div><b>Nghĩa:</b> con trai</div>
+        <div><b>Từ tính:</b> danh từ</div>
+        <div class="example"><b>Ví dụ:</b> 他有一个儿子。<br><span>Tā yǒu yí ge érzi.</span><br>Anh ấy có một con trai.</div>
+      </div>
+      
+      <div class="audio-group" onclick="event.stopPropagation()">
+        <button class="audio-btn slow" onclick="speakMandarin('儿子',0.72,this)">🔊 Chậm</button>
+        <button class="audio-btn normal" onclick="speakMandarin('儿子',0.92,this)">🔊 Bình thường</button>
+      </div>
+    </article>
+    
+    <article class="vocab-card" data-search="孩子 háizi hài tử đứa trẻ, con cái danh từ" onclick="toggleCard(this)">
+      <div class="card-front">
+        <div class="icon">🧒</div>
+        <div class="hanzi">孩子</div>
+        <div class="tap">Chạm để xem nghĩa</div>
+      </div>
+      <div class="card-back">
+        <div class="pinyin">háizi</div>
+        <div><b>Âm Hán Việt:</b> hài tử</div>
+        <div><b>Nghĩa:</b> đứa trẻ, con cái</div>
+        <div><b>Từ tính:</b> danh từ</div>
+        <div class="example"><b>Ví dụ:</b> 这个孩子五岁。<br><span>Zhège háizi wǔ suì.</span><br>Đứa trẻ này năm tuổi.</div>
+      </div>
+      
+      <div class="audio-group" onclick="event.stopPropagation()">
+        <button class="audio-btn slow" onclick="speakMandarin('孩子',0.72,this)">🔊 Chậm</button>
+        <button class="audio-btn normal" onclick="speakMandarin('孩子',0.92,this)">🔊 Bình thường</button>
+      </div>
+    </article>
+    
+    <article class="vocab-card" data-search="女儿 nǚ&#x27;ér nữ nhi con gái danh từ" onclick="toggleCard(this)">
+      <div class="card-front">
+        <div class="icon">👧</div>
+        <div class="hanzi">女儿</div>
+        <div class="tap">Chạm để xem nghĩa</div>
+      </div>
+      <div class="card-back">
+        <div class="pinyin">nǚ'ér</div>
+        <div><b>Âm Hán Việt:</b> nữ nhi</div>
+        <div><b>Nghĩa:</b> con gái</div>
+        <div><b>Từ tính:</b> danh từ</div>
+        <div class="example"><b>Ví dụ:</b> 她女儿今年六岁。<br><span>Tā nǚ'ér jīnnián liù suì.</span><br>Con gái cô ấy năm nay sáu tuổi.</div>
+      </div>
+      
+      <div class="audio-group" onclick="event.stopPropagation()">
+        <button class="audio-btn slow" onclick="speakMandarin('女儿',0.72,this)">🔊 Chậm</button>
+        <button class="audio-btn normal" onclick="speakMandarin('女儿',0.92,this)">🔊 Bình thường</button>
+      </div>
+    </article>
+    
+    <article class="vocab-card" data-search="岁 suì tuế tuổi lượng từ" onclick="toggleCard(this)">
+      <div class="card-front">
+        <div class="icon">🎂</div>
+        <div class="hanzi">岁</div>
+        <div class="tap">Chạm để xem nghĩa</div>
+      </div>
+      <div class="card-back">
+        <div class="pinyin">suì</div>
+        <div><b>Âm Hán Việt:</b> tuế</div>
+        <div><b>Nghĩa:</b> tuổi</div>
+        <div><b>Từ tính:</b> lượng từ</div>
+        <div class="example"><b>Ví dụ:</b> 我今年九岁。<br><span>Wǒ jīnnián jiǔ suì.</span><br>Năm nay tôi chín tuổi.</div>
+      </div>
+      
+      <div class="audio-group" onclick="event.stopPropagation()">
+        <button class="audio-btn slow" onclick="speakMandarin('岁',0.72,this)">🔊 Chậm</button>
+        <button class="audio-btn normal" onclick="speakMandarin('岁',0.92,this)">🔊 Bình thường</button>
+      </div>
+    </article>
+    
+    <article class="vocab-card" data-search="他 tā tha anh ấy, ông ấy đại từ" onclick="toggleCard(this)">
+      <div class="card-front">
+        <div class="icon">👨‍🦱</div>
+        <div class="hanzi">他</div>
+        <div class="tap">Chạm để xem nghĩa</div>
+      </div>
+      <div class="card-back">
+        <div class="pinyin">tā</div>
+        <div><b>Âm Hán Việt:</b> tha</div>
+        <div><b>Nghĩa:</b> anh ấy, ông ấy</div>
+        <div><b>Từ tính:</b> đại từ</div>
+        <div class="example"><b>Ví dụ:</b> 他是我哥哥。<br><span>Tā shì wǒ gēge.</span><br>Anh ấy là anh trai tôi.</div>
+      </div>
+      
+      <div class="audio-group" onclick="event.stopPropagation()">
+        <button class="audio-btn slow" onclick="speakMandarin('他',0.72,this)">🔊 Chậm</button>
+        <button class="audio-btn normal" onclick="speakMandarin('他',0.92,this)">🔊 Bình thường</button>
+      </div>
+    </article>
+    
+    <article class="vocab-card" data-search="今年 jīnnián kim niên năm nay danh từ thời gian" onclick="toggleCard(this)">
+      <div class="card-front">
+        <div class="icon">📅</div>
+        <div class="hanzi">今年</div>
+        <div class="tap">Chạm để xem nghĩa</div>
+      </div>
+      <div class="card-back">
+        <div class="pinyin">jīnnián</div>
+        <div><b>Âm Hán Việt:</b> kim niên</div>
+        <div><b>Nghĩa:</b> năm nay</div>
+        <div><b>Từ tính:</b> danh từ thời gian</div>
+        <div class="example"><b>Ví dụ:</b> 我今年十岁。<br><span>Wǒ jīnnián shí suì.</span><br>Năm nay tôi mười tuổi.</div>
+      </div>
+      
+      <div class="audio-group" onclick="event.stopPropagation()">
+        <button class="audio-btn slow" onclick="speakMandarin('今年',0.72,this)">🔊 Chậm</button>
+        <button class="audio-btn normal" onclick="speakMandarin('今年',0.92,this)">🔊 Bình thường</button>
+      </div>
+    </article>
+    
+    <article class="vocab-card" data-search="多大 duōdà đa đại bao nhiêu tuổi; lớn bao nhiêu cụm nghi vấn" onclick="toggleCard(this)">
+      <div class="card-front">
+        <div class="icon">📏</div>
+        <div class="hanzi">多大</div>
+        <div class="tap">Chạm để xem nghĩa</div>
+      </div>
+      <div class="card-back">
+        <div class="pinyin">duōdà</div>
+        <div><b>Âm Hán Việt:</b> đa đại</div>
+        <div><b>Nghĩa:</b> bao nhiêu tuổi; lớn bao nhiêu</div>
+        <div><b>Từ tính:</b> cụm nghi vấn</div>
+        <div class="example"><b>Ví dụ:</b> 你今年多大？<br><span>Nǐ jīnnián duō dà?</span><br>Năm nay bạn bao nhiêu tuổi?</div>
+      </div>
+      
+      <div class="audio-group" onclick="event.stopPropagation()">
+        <button class="audio-btn slow" onclick="speakMandarin('多大',0.72,this)">🔊 Chậm</button>
+        <button class="audio-btn normal" onclick="speakMandarin('多大',0.92,this)">🔊 Bình thường</button>
+      </div>
+    </article>
+    </div>
+</section>
+
+<section id="stroke">
+  <h2 class="section-title">笔顺 — Thứ tự nét theo từ/cụm từ</h2>
+  <div class="stroke-panel">
+    <p>Gõ hoặc chọn <b>nguyên từ/cụm từ</b> như <b>今年、多大、没有、苹果</b>. Các chữ sẽ hiện cạnh nhau và có thể viết lần lượt toàn bộ cụm.</p>
+    <input id="stroke-search" placeholder="🔎 Tìm nguyên từ/cụm từ: 今年、多大、没有..." oninput="filterStrokeWords()" onkeydown="strokeEnter(event)">
+    <div class="word-list" id="word-list"><button class="word-btn" data-word="有" data-pinyin="yǒu" onclick="selectWord('有','yǒu',this)">有</button><button class="word-btn" data-word="没有" data-pinyin="méiyǒu" onclick="selectWord('没有','méiyǒu',this)">没有</button><button class="word-btn" data-word="猫" data-pinyin="māo" onclick="selectWord('猫','māo',this)">猫</button><button class="word-btn" data-word="苹果" data-pinyin="píngguǒ" onclick="selectWord('苹果','píngguǒ',this)">苹果</button><button class="word-btn" data-word="多少" data-pinyin="duōshao" onclick="selectWord('多少','duōshao',this)">多少</button><button class="word-btn" data-word="个" data-pinyin="gè" onclick="selectWord('个','gè',this)">个</button><button class="word-btn" data-word="钱" data-pinyin="qián" onclick="selectWord('钱','qián',this)">钱</button><button class="word-btn" data-word="呢" data-pinyin="ne" onclick="selectWord('呢','ne',this)">呢</button><button class="word-btn" data-word="没" data-pinyin="méi" onclick="selectWord('没','méi',this)">没</button><button class="word-btn" data-word="家" data-pinyin="jiā" onclick="selectWord('家','jiā',this)">家</button><button class="word-btn" data-word="几" data-pinyin="jǐ" onclick="selectWord('几','jǐ',this)">几</button><button class="word-btn" data-word="口" data-pinyin="kǒu" onclick="selectWord('口','kǒu',this)">口</button><button class="word-btn" data-word="奶奶" data-pinyin="nǎinai" onclick="selectWord('奶奶','nǎinai',this)">奶奶</button><button class="word-btn" data-word="爷爷" data-pinyin="yéye" onclick="selectWord('爷爷','yéye',this)">爷爷</button><button class="word-btn" data-word="爸爸" data-pinyin="bàba" onclick="selectWord('爸爸','bàba',this)">爸爸</button><button class="word-btn" data-word="妈妈" data-pinyin="māma" onclick="selectWord('妈妈','māma',this)">妈妈</button><button class="word-btn" data-word="妹妹" data-pinyin="mèimei" onclick="selectWord('妹妹','mèimei',this)">妹妹</button><button class="word-btn" data-word="哥哥" data-pinyin="gēge" onclick="selectWord('哥哥','gēge',this)">哥哥</button><button class="word-btn" data-word="和" data-pinyin="hé" onclick="selectWord('和','hé',this)">和</button><button class="word-btn" data-word="儿子" data-pinyin="érzi" onclick="selectWord('儿子','érzi',this)">儿子</button><button class="word-btn" data-word="孩子" data-pinyin="háizi" onclick="selectWord('孩子','háizi',this)">孩子</button><button class="word-btn" data-word="女儿" data-pinyin="nǚ'ér" onclick="selectWord('女儿','nǚ'ér',this)">女儿</button><button class="word-btn" data-word="岁" data-pinyin="suì" onclick="selectWord('岁','suì',this)">岁</button><button class="word-btn" data-word="他" data-pinyin="tā" onclick="selectWord('他','tā',this)">他</button><button class="word-btn" data-word="今年" data-pinyin="jīnnián" onclick="selectWord('今年','jīnnián',this)">今年</button><button class="word-btn" data-word="多大" data-pinyin="duōdà" onclick="selectWord('多大','duōdà',this)">多大</button></div>
+    <div id="stroke-word-title"></div>
+    <div id="stroke-word-pinyin"></div>
+    <div id="stroke-targets"></div>
+    <div class="stroke-controls">
+      <button onclick="animateWord()">✍️ Viết cả từ/cụm</button>
+      <button onclick="quizWord()">🎯 Luyện từng chữ</button>
+      <button onclick="resetWord()">↻ Làm lại</button>
+    </div>
+  </div>
+</section>
+
+<section id="grammar">
+  <h2 class="section-title">Phần 2. Ngữ pháp</h2>
+  <div class="grammar-grid">
+    <div class="grammar-box">
+      <h3>1. Hỏi tuổi</h3>
+      <div class="pattern"><b>Dùng cho trẻ nhỏ, thường dưới 10 tuổi:</b><div class="grammar-cn">S + 今年几岁？</div><div>Nǐ jīnnián jǐ suì? — Năm nay bạn mấy tuổi?</div></div>
+      <div class="pattern"><b>Cách hỏi phổ biến:</b><div class="grammar-cn">S + 今年多大？</div><div>Nǐ jīnnián duō dà? — Năm nay bạn bao nhiêu tuổi?</div></div>
+      <div class="pattern"><b>Trả lời:</b><div class="grammar-cn">S + 今年 + số + 岁。</div><div>我今年八岁。Wǒ jīnnián bā suì. — Năm nay tôi 8 tuổi.</div></div>
+    </div>
+    <div class="grammar-box">
+      <h3>2. Diễn tả số lượng với 有 / 没有</h3>
+      <div class="pattern"><div class="grammar-cn">S + 有 + số lượng + lượng từ + N</div><div>我有一个苹果。— Tôi có một quả táo.</div></div>
+      <div class="pattern"><div class="grammar-cn">S + 没有 + N</div><div>我没有猫。— Tôi không có mèo.</div></div>
+      <div class="pattern"><b>Lưu ý:</b> Không nói <s>不有</s>. Phủ định của 有 là <b>没有</b>.</div>
+    </div>
+    <div class="grammar-box">
+      <h3>3. S + 呢？ — Còn… thì sao?</h3>
+      <div class="pattern"><div class="grammar-cn">我很好，你呢？</div><div>Wǒ hěn hǎo, nǐ ne? — Tôi rất khỏe, còn bạn thì sao?</div></div>
+      <div class="pattern"><div class="grammar-cn">我有一个哥哥，你呢？</div><div>Wǒ yǒu yí ge gēge, nǐ ne? — Tôi có một anh trai, còn bạn?</div></div>
+    </div>
+  </div>
+</section>
+
+<section id="sentences">
+  <h2 class="section-title">Phần 3. Mẫu câu</h2>
+  <div class="note">Bấm vào câu để hiện pinyin và nghĩa tiếng Việt.</div>
+  <div class="sentence-list"><div class="sentence-card" onclick="this.classList.toggle('open')">
+      <div class="sentence-cn">你家有几口人？</div>
+      <div class="sentence-hint">Bấm để hiện pinyin và nghĩa</div>
+      <div class="sentence-answer"><div>Nǐ jiā yǒu jǐ kǒu rén?</div><div>Nhà bạn có mấy người?</div></div>
+    </div>
+<div class="sentence-card" onclick="this.classList.toggle('open')">
+      <div class="sentence-cn">这部手机多少钱？</div>
+      <div class="sentence-hint">Bấm để hiện pinyin và nghĩa</div>
+      <div class="sentence-answer"><div>Zhè bù shǒujī duōshao qián?</div><div>Chiếc điện thoại này bao nhiêu tiền?</div></div>
+    </div>
+<div class="sentence-card" onclick="this.classList.toggle('open')">
+      <div class="sentence-cn">你学校有多少学生？</div>
+      <div class="sentence-hint">Bấm để hiện pinyin và nghĩa</div>
+      <div class="sentence-answer"><div>Nǐ xuéxiào yǒu duōshao xuésheng?</div><div>Trường bạn có bao nhiêu học sinh?</div></div>
+    </div>
+<div class="sentence-card" onclick="this.classList.toggle('open')">
+      <div class="sentence-cn">你在哪儿工作？</div>
+      <div class="sentence-hint">Bấm để hiện pinyin và nghĩa</div>
+      <div class="sentence-answer"><div>Nǐ zài nǎr gōngzuò?</div><div>Bạn làm việc ở đâu?</div></div>
+    </div>
+<div class="sentence-card" onclick="this.classList.toggle('open')">
+      <div class="sentence-cn">你说对了。</div>
+      <div class="sentence-hint">Bấm để hiện pinyin và nghĩa</div>
+      <div class="sentence-answer"><div>Nǐ shuō duì le.</div><div>Bạn nói đúng rồi.</div></div>
+    </div>
+<div class="sentence-card" onclick="this.classList.toggle('open')">
+      <div class="sentence-cn">你说错了。</div>
+      <div class="sentence-hint">Bấm để hiện pinyin và nghĩa</div>
+      <div class="sentence-answer"><div>Nǐ shuō cuò le.</div><div>Bạn nói sai rồi.</div></div>
+    </div>
+<div class="sentence-card" onclick="this.classList.toggle('open')">
+      <div class="sentence-cn">你工作还忙吗？</div>
+      <div class="sentence-hint">Bấm để hiện pinyin và nghĩa</div>
+      <div class="sentence-answer"><div>Nǐ gōngzuò hái máng ma?</div><div>Công việc của bạn vẫn bận à?</div></div>
+    </div>
+<div class="sentence-card" onclick="this.classList.toggle('open')">
+      <div class="sentence-cn">你有时间吗？</div>
+      <div class="sentence-hint">Bấm để hiện pinyin và nghĩa</div>
+      <div class="sentence-answer"><div>Nǐ yǒu shíjiān ma?</div><div>Bạn có thời gian không?</div></div>
+    </div>
+<div class="sentence-card" onclick="this.classList.toggle('open')">
+      <div class="sentence-cn">我喜欢看书。</div>
+      <div class="sentence-hint">Bấm để hiện pinyin và nghĩa</div>
+      <div class="sentence-answer"><div>Wǒ xǐhuan kàn shū.</div><div>Tôi thích đọc sách.</div></div>
+    </div>
+<div class="sentence-card" onclick="this.classList.toggle('open')">
+      <div class="sentence-cn">我喜欢吃菜。</div>
+      <div class="sentence-hint">Bấm để hiện pinyin và nghĩa</div>
+      <div class="sentence-answer"><div>Wǒ xǐhuan chī cài.</div><div>Tôi thích ăn rau/món ăn.</div></div>
+    </div>
+<div class="sentence-card" onclick="this.classList.toggle('open')">
+      <div class="sentence-cn">我爸爸是医生。</div>
+      <div class="sentence-hint">Bấm để hiện pinyin và nghĩa</div>
+      <div class="sentence-answer"><div>Wǒ bàba shì yīshēng.</div><div>Bố tôi là bác sĩ.</div></div>
+    </div>
+<div class="sentence-card" onclick="this.classList.toggle('open')">
+      <div class="sentence-cn">我坐出租车去学校。</div>
+      <div class="sentence-hint">Bấm để hiện pinyin và nghĩa</div>
+      <div class="sentence-answer"><div>Wǒ zuò chūzūchē qù xuéxiào.</div><div>Tôi đi taxi đến trường.</div></div>
+    </div></div>
+</section>
+</main>
+<footer><b>Tiếng Trung Minxian (Minxian.chinese) | Zalo: 0833312711</b></footer>
+<script>
+function toggleCard(card) { card.classList.toggle('open'); }
+function filterCards() {
+  const q = document.getElementById('search').value.trim().toLowerCase();
+  document.querySelectorAll('.vocab-card').forEach(c => {
+    c.style.display = c.dataset.search.includes(q) ? '' : 'none';
+  });
+}
+let currentUtterance = null;
+let cachedChineseVoices = [];
+
+function loadChineseVoices() {
+  const voices = window.speechSynthesis ? speechSynthesis.getVoices() : [];
+  cachedChineseVoices = voices.filter(v =>
+    /^zh(-|_)?CN/i.test(v.lang) ||
+    /Mandarin|Chinese|普通话|中文|Xiaoxiao|Yunxi|Tingting/i.test(v.name)
+  );
+}
+
+if ("speechSynthesis" in window) {
+  loadChineseVoices();
+  speechSynthesis.onvoiceschanged = loadChineseVoices;
+}
+
+function chooseMandarinVoice() {
+  loadChineseVoices();
+  if (!cachedChineseVoices.length) return null;
+
+  const preferredPatterns = [
+    /Xiaoxiao/i, /Yunxi/i, /Tingting/i, /Mandarin/i,
+    /普通话/i, /Chinese.*China/i, /zh-CN/i
+  ];
+
+  for (const pattern of preferredPatterns) {
+    const found = cachedChineseVoices.find(v => pattern.test(v.name) || pattern.test(v.lang));
+    if (found) return found;
+  }
+  return cachedChineseVoices[0];
+}
+
+function speakMandarin(text, rate, btn) {
+  if (!("speechSynthesis" in window)) {
+    alert("Trình duyệt này chưa hỗ trợ đọc giọng nói. Hãy mở bằng Chrome, Edge hoặc Safari mới.");
+    return;
+  }
+
+  speechSynthesis.cancel();
+  const utterance = new SpeechSynthesisUtterance(text);
+  utterance.lang = "zh-CN";
+  utterance.rate = rate;
+  utterance.pitch = 1;
+  utterance.volume = 1;
+
+  const voice = chooseMandarinVoice();
+  if (voice) utterance.voice = voice;
+
+  const original = btn.textContent;
+  btn.disabled = true;
+  btn.textContent = "⏳";
+
+  utterance.onend = () => {
+    btn.disabled = false;
+    btn.textContent = original;
+  };
+  utterance.onerror = () => {
+    btn.disabled = false;
+    btn.textContent = original;
+    alert("Không phát được giọng tiếng Trung. Hãy kiểm tra cài đặt giọng zh-CN trên thiết bị.");
+  };
+
+  currentUtterance = utterance;
+  speechSynthesis.speak(utterance);
+}
+const strokeVocabulary = [{"word": "有", "pinyin": "yǒu"}, {"word": "没有", "pinyin": "méiyǒu"}, {"word": "猫", "pinyin": "māo"}, {"word": "苹果", "pinyin": "píngguǒ"}, {"word": "多少", "pinyin": "duōshao"}, {"word": "个", "pinyin": "gè"}, {"word": "钱", "pinyin": "qián"}, {"word": "呢", "pinyin": "ne"}, {"word": "没", "pinyin": "méi"}, {"word": "家", "pinyin": "jiā"}, {"word": "几", "pinyin": "jǐ"}, {"word": "口", "pinyin": "kǒu"}, {"word": "奶奶", "pinyin": "nǎinai"}, {"word": "爷爷", "pinyin": "yéye"}, {"word": "爸爸", "pinyin": "bàba"}, {"word": "妈妈", "pinyin": "māma"}, {"word": "妹妹", "pinyin": "mèimei"}, {"word": "哥哥", "pinyin": "gēge"}, {"word": "和", "pinyin": "hé"}, {"word": "儿子", "pinyin": "érzi"}, {"word": "孩子", "pinyin": "háizi"}, {"word": "女儿", "pinyin": "nǚ'ér"}, {"word": "岁", "pinyin": "suì"}, {"word": "他", "pinyin": "tā"}, {"word": "今年", "pinyin": "jīnnián"}, {"word": "多大", "pinyin": "duōdà"}];
+let currentWord = "今年";
+let currentPinyin = "jīnnián";
+let wordWriters = [];
+
+function onlyHanzi(str) {
+  return Array.from(str).filter(ch => /[\u3400-\u9fff]/.test(ch));
+}
+
+function selectWord(word, pinyin="", button=null) {
+  currentWord = word;
+  currentPinyin = pinyin || "";
+  document.getElementById("stroke-search").value = word;
+  document.getElementById("stroke-word-title").textContent = word;
+  document.getElementById("stroke-word-pinyin").textContent = currentPinyin;
+  document.querySelectorAll(".word-btn").forEach(b => b.classList.remove("active"));
+  if (button) button.classList.add("active");
+
+  const target = document.getElementById("stroke-targets");
+  target.innerHTML = "";
+  wordWriters = [];
+
+  const chars = onlyHanzi(word);
+  chars.forEach((ch, index) => {
+    const box = document.createElement("div");
+    box.className = "stroke-char-box";
+    box.innerHTML = `<div class="stroke-char-label">${ch}</div><div class="stroke-canvas" id="stroke-canvas-${index}"></div>`;
+    target.appendChild(box);
+
+    const size = window.innerWidth <= 600 ? 155 : 200;
+    const writer = HanziWriter.create(`stroke-canvas-${index}`, ch, {
+      width:size, height:size, padding:10, showOutline:true,
+      strokeAnimationSpeed:1, delayBetweenStrokes:220
+    });
+    wordWriters.push(writer);
+  });
+}
+
+function filterStrokeWords() {
+  const q = document.getElementById("stroke-search").value.trim().toLowerCase();
+  document.querySelectorAll(".word-btn").forEach(btn => {
+    const hay = (btn.dataset.word + " " + btn.dataset.pinyin).toLowerCase();
+    btn.style.display = hay.includes(q) ? "" : "none";
+  });
+}
+
+function strokeEnter(event) {
+  if (event.key !== "Enter") return;
+  const q = document.getElementById("stroke-search").value.trim();
+  if (!q) return;
+  const found = strokeVocabulary.find(x => x.word === q);
+  selectWord(q, found ? found.pinyin : "");
+}
+
+async function animateWord() {
+  for (const writer of wordWriters) {
+    await new Promise(resolve => writer.animateCharacter({onComplete:resolve}));
+  }
+}
+
+function quizWord() {
+  wordWriters.forEach(writer => writer.quiz({showHintAfterMisses:2}));
+}
+
+function resetWord() {
+  selectWord(currentWord,currentPinyin);
+}
+
+window.addEventListener("load", () => {
+  const first = Array.from(document.querySelectorAll(".word-btn")).find(b => b.dataset.word === "今年");
+  selectWord("今年","jīnnián",first);
+});
+</script>
+</body>
+</html>
