@@ -1,0 +1,667 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>HSK1 Bài 7 - 时间与生活 | Từ vựng - Ngữ pháp - Mẫu câu</title>
+<style>
+  :root{
+    --bg:#fffaf4; --paper:#ffffff; --ink:#25313c; --muted:#6f7b86;
+    --red:#ea5b56; --orange:#f6a84b; --yellow:#ffd866; --green:#78bd92;
+    --blue:#63a9d8; --purple:#8f78c6; --pink:#ed86a9; --line:#e8e1d9;
+    --shadow:0 12px 30px rgba(62,52,42,.10);
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;background:
+    radial-gradient(circle at 12% 0%,rgba(255,216,102,.28),transparent 26%),
+    radial-gradient(circle at 95% 8%,rgba(99,169,216,.18),transparent 24%),
+    var(--bg);color:var(--ink);font-family:"Times New Roman",Times,serif;line-height:1.55}
+  .hanzi, .zh, h1 .cn, h2 .cn, h3 .cn{font-family:KaiTi,"Kaiti SC",STKaiti,"楷体",serif}
+  button,input,select{font:inherit}
+  button{cursor:pointer}
+  .wrap{width:min(1180px,94vw);margin:auto}
+  header{padding:38px 0 22px}
+  .hero{background:linear-gradient(135deg,#fff 0%,#fffaf0 58%,#f4fbff 100%);border:1px solid var(--line);border-radius:30px;box-shadow:var(--shadow);padding:34px;position:relative;overflow:hidden}
+  .hero:before{content:"⏰";position:absolute;right:28px;top:10px;font-size:95px;opacity:.13;transform:rotate(10deg)}
+  .eyebrow{display:inline-flex;gap:8px;align-items:center;background:#fff2c7;color:#7e5b00;padding:7px 12px;border-radius:999px;font-weight:700;font-size:14px}
+  h1{font-size:clamp(31px,5vw,58px);line-height:1.05;margin:15px 0 8px}
+  h1 .cn{color:#1f485d;font-size:1.06em}
+  .subtitle{font-size:18px;color:var(--muted);max-width:790px;margin:0 0 20px}
+  .quickstats{display:flex;flex-wrap:wrap;gap:10px;margin-top:18px}
+  .pill{border:1px solid var(--line);background:#fff;padding:8px 12px;border-radius:999px;font-size:14px}
+  nav{position:sticky;top:0;z-index:50;background:rgba(255,250,244,.92);backdrop-filter:blur(12px);border-bottom:1px solid rgba(222,213,203,.8)}
+  nav .wrap{display:flex;gap:8px;overflow-x:auto;padding:10px 0}
+  nav a{white-space:nowrap;text-decoration:none;color:var(--ink);background:white;border:1px solid var(--line);border-radius:999px;padding:8px 13px;font-weight:700;font-size:14px}
+  nav a:hover{border-color:#c9bfb3;transform:translateY(-1px)}
+  section{padding:34px 0}
+  .section-title{display:flex;align-items:center;gap:12px;margin-bottom:18px}
+  .section-title .num{width:44px;height:44px;border-radius:14px;display:grid;place-items:center;background:#263c4a;color:white;font-weight:800;font-size:20px;box-shadow:0 6px 0 #dfe7ec}
+  .section-title h2{margin:0;font-size:30px}
+  .section-title p{margin:2px 0 0;color:var(--muted)}
+  .toolbar{display:grid;grid-template-columns:minmax(220px,1fr) auto auto;gap:10px;margin:12px 0 18px}
+  .searchbox{position:relative}
+  .searchbox input{width:100%;border:1px solid #dcd5cc;border-radius:15px;padding:13px 16px 13px 44px;background:white;outline:none}
+  .searchbox span{position:absolute;left:15px;top:10px;font-size:21px}
+  select,.softbtn{border:1px solid #dcd5cc;background:#fff;border-radius:15px;padding:10px 12px;color:var(--ink)}
+  .softbtn:hover{box-shadow:0 4px 14px rgba(0,0,0,.08)}
+  .category{margin:30px 0}
+  .category-head{display:flex;gap:10px;align-items:center;margin-bottom:12px}
+  .category-head h3{margin:0;font-size:23px}
+  .category-head .tag{font-size:13px;padding:4px 9px;border-radius:999px;background:#eef6f1;color:#397551}
+  .grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px}
+  .vocab-card{height:256px;perspective:1200px;outline:none}
+  .card-inner{width:100%;height:100%;position:relative;transition:transform .56s cubic-bezier(.2,.72,.2,1);transform-style:preserve-3d}
+  .vocab-card.flipped .card-inner{transform:rotateY(180deg)}
+  .card-face{position:absolute;inset:0;border-radius:22px;border:1px solid var(--line);background:white;box-shadow:0 8px 24px rgba(70,58,45,.08);backface-visibility:hidden;overflow:hidden}
+  .card-front{display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:18px;background:linear-gradient(160deg,#fff,#fffaf1)}
+  .card-back{transform:rotateY(180deg);padding:18px;display:flex;flex-direction:column;justify-content:space-between;background:#fff}
+  .emoji{font-size:52px;filter:drop-shadow(0 5px 8px rgba(0,0,0,.09));margin-bottom:8px}
+  .word{font-family:KaiTi,"Kaiti SC",STKaiti,"楷体",serif;font-size:36px;font-weight:700;line-height:1.15}
+  .hint{font-size:13px;color:var(--muted);margin-top:8px}
+  .front-actions{position:absolute;right:9px;top:9px;display:flex;gap:6px}
+  .iconbtn{width:38px;height:38px;border:none;border-radius:12px;background:#fff;border:1px solid var(--line);display:grid;place-items:center;font-size:18px;box-shadow:0 4px 10px rgba(0,0,0,.05)}
+  .iconbtn:hover{transform:scale(1.06)}
+  .pinyin{font-weight:700;color:#1a7a8d;font-size:19px}
+  .hv{color:#8b5d16;font-size:14px}
+  .meaning{font-size:16px;font-weight:700;margin:3px 0}
+  .pos{display:inline-block;font-size:12px;padding:3px 8px;border-radius:999px;background:#edf4ff;color:#3b5e7a;margin-top:4px}
+  .example{border-top:1px dashed #ddd1c5;padding-top:10px;margin-top:10px;font-size:14px}
+  .example .zh{font-size:18px}
+  .example .expy{color:#557583;font-style:italic;font-size:13px}
+  .example .vi{color:#5f615f;font-size:13px}
+  .back-actions{display:flex;gap:8px;margin-top:10px}
+  .mini{border:none;border-radius:10px;padding:7px 9px;background:#f4f1ed;font-size:13px}
+  .mini.primary{background:#e8f4ff;color:#255e80}
+  .empty{grid-column:1/-1;text-align:center;background:white;border:1px dashed #d8cfc5;border-radius:18px;padding:30px;color:var(--muted)}
+
+  .grammar-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+  .grammar{background:white;border:1px solid var(--line);border-radius:24px;padding:22px;box-shadow:0 8px 22px rgba(63,52,44,.07)}
+  .grammar h3{margin:0 0 9px;font-size:22px}
+  .formula{background:#f7fafb;border-left:5px solid #69a9c8;border-radius:12px;padding:10px 12px;font-weight:700;margin:10px 0}
+  .formula.orange{border-color:#f1a34a;background:#fff8ee}
+  .formula.green{border-color:#70b88e;background:#f1faf5}
+  .gram-note{font-size:14px;color:#666}
+  .time-demo{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin-top:12px}
+  .time-chip{border-radius:14px;padding:10px;background:#fff8e7;border:1px solid #f0dfb2;text-align:center}
+  .time-chip b{font-family:KaiTi,"Kaiti SC",STKaiti,"楷体",serif;font-size:20px;display:block}
+  .compare{margin-top:12px;display:grid;gap:7px}
+  .compare div{display:flex;justify-content:space-between;gap:12px;background:#f7f7f7;border-radius:10px;padding:8px 10px;font-size:14px}
+  .compare strong{font-family:KaiTi,"Kaiti SC",STKaiti,"楷体",serif;font-size:17px}
+
+  .sentence-list{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+  details.sentence{background:white;border:1px solid var(--line);border-radius:18px;padding:0 16px;box-shadow:0 6px 15px rgba(63,52,44,.05)}
+  details.sentence summary{list-style:none;cursor:pointer;padding:14px 0;display:flex;align-items:center;gap:10px;font-size:21px}
+  details.sentence summary::-webkit-details-marker{display:none}
+  details.sentence summary .zh{flex:1}
+  .sentence-content{padding:0 0 14px;border-top:1px dashed #ded6cd}
+  .sentence-content .py{color:#1b7a8c;font-style:italic;margin:9px 0 2px}
+  .sentence-content .vi{color:#5d635f}
+
+  .exercise{background:white;border:1px solid var(--line);border-radius:26px;padding:24px;box-shadow:var(--shadow)}
+  .bank{display:flex;flex-wrap:wrap;gap:8px;background:#fff8e8;border:1px solid #efdcae;border-radius:18px;padding:14px;margin:10px 0 18px}
+  .bank-chip{border:none;background:#fff;border:1px solid #e1cf9f;border-radius:999px;padding:7px 11px;font-family:KaiTi,"Kaiti SC",STKaiti,"楷体",serif;font-size:18px}
+  .bank-chip:hover{background:#fff2c8}
+  .q-list{display:grid;grid-template-columns:repeat(2,1fr);gap:10px 18px}
+  .q{padding:11px 12px;border-radius:14px;background:#fafafa;border:1px solid #eee7e0}
+  .q-line{display:flex;align-items:center;flex-wrap:wrap;gap:7px;font-size:18px}
+  .q-num{width:26px;height:26px;border-radius:9px;background:#314b5d;color:white;display:grid;place-items:center;font-size:13px;font-family:Arial,sans-serif}
+  .blank{min-width:120px;border:none;border-bottom:2px solid #94a3ad;background:#fff;padding:3px 6px;outline:none;text-align:center;font-family:KaiTi,"Kaiti SC",STKaiti,"楷体",serif;font-size:18px}
+  .q.correct{background:#effaf3;border-color:#9ed4af}.q.wrong{background:#fff1f1;border-color:#efb0b0}
+  .ex-actions{display:flex;flex-wrap:wrap;gap:9px;margin-top:17px}
+  .mainbtn{border:none;border-radius:13px;padding:10px 15px;font-weight:700;background:#314b5d;color:white}
+  .mainbtn.alt{background:#f0ece6;color:#444}
+  #score{font-weight:800;margin-left:auto;align-self:center}
+
+  .source-note{background:#f3f8fa;border:1px solid #cfe2eb;border-radius:20px;padding:17px 20px;color:#445c68}
+  footer{padding:28px 0 50px;color:#777;text-align:center;font-size:13px}
+
+  dialog{border:none;border-radius:24px;max-width:920px;width:min(92vw,920px);padding:0;box-shadow:0 24px 80px rgba(0,0,0,.28)}
+  dialog::backdrop{background:rgba(22,31,37,.55);backdrop-filter:blur(3px)}
+  .modal-head{display:flex;align-items:center;gap:12px;padding:17px 20px;border-bottom:1px solid var(--line);background:#fffaf2;position:sticky;top:0;z-index:2}
+  .modal-head .modal-word{font-family:KaiTi,"Kaiti SC",STKaiti,"楷体",serif;font-size:28px;font-weight:800;flex:1}
+  .close{width:38px;height:38px;border:none;border-radius:12px;background:#eee7df;font-size:20px}
+  .modal-body{padding:20px;max-height:75vh;overflow:auto}
+  .stroke-help{color:#667;font-size:14px;margin:0 0 12px}
+  .writers{display:flex;flex-wrap:wrap;gap:14px}
+  .writer-unit{width:164px;background:#fbfbfb;border:1px solid #e6e0d9;border-radius:18px;padding:12px;text-align:center}
+  .writer-title{font-family:KaiTi,"Kaiti SC",STKaiti,"楷体",serif;font-size:24px;font-weight:700}
+  .writer-canvas{width:140px;height:140px;margin:7px auto;background:
+    linear-gradient(90deg,transparent 49.6%,#e8e2db 49.8%,#e8e2db 50.2%,transparent 50.4%),
+    linear-gradient(transparent 49.6%,#e8e2db 49.8%,#e8e2db 50.2%,transparent 50.4%),#fff;
+    border:1px solid #dad2c8;border-radius:8px}
+  .writer-fallback{font-family:KaiTi,"Kaiti SC",STKaiti,"楷体",serif;font-size:94px;line-height:138px;color:#555}
+  .writer-actions{display:flex;gap:6px;justify-content:center}
+  .writer-actions button{border:none;background:#edf4f7;border-radius:9px;padding:6px 8px;font-size:12px}
+  .stroke-offline{display:none;background:#fff4d7;border:1px solid #efd69c;border-radius:12px;padding:10px;margin-bottom:12px;color:#725a22}
+
+  @media(max-width:980px){.grid{grid-template-columns:repeat(3,1fr)}.grammar-grid{grid-template-columns:1fr}.sentence-list{grid-template-columns:1fr}.q-list{grid-template-columns:1fr}}
+  @media(max-width:720px){.grid{grid-template-columns:repeat(2,1fr)}.toolbar{grid-template-columns:1fr}.vocab-card{height:240px}.hero{padding:25px}.writers{justify-content:center}}
+  @media(max-width:470px){.grid{grid-template-columns:1fr}.vocab-card{height:250px}.q-line{font-size:17px}}
+  @media print{nav,.toolbar,.front-actions,.back-actions,.ex-actions,.iconbtn{display:none!important}body{background:white}.vocab-card{break-inside:avoid}.card-inner{transform:none!important}.card-back{display:none}.grid{grid-template-columns:repeat(3,1fr)}}
+
+/* ===== FONT CHUẨN MINXIAN ===== */
+.zh,
+.hanzi,
+.word,
+.cn,
+.formula .zh,
+.time-chip b,
+.compare strong,
+.bank-chip,
+.blank,
+.modal-word,
+.writer-title,
+.writer-fallback,
+header h1 .cn,
+h2 .cn,
+h3 .cn {
+  font-family:"KaiTi","STKaiti","Kaiti SC","楷体","Songti SC",serif !important;
+}
+
+.py,
+.pinyin,
+.expy,
+.sentence-content .py,
+.stroke-title .pinyin {
+  font-family:"Heiti SC","STHeiti","PingFang SC","Microsoft YaHei",Arial,sans-serif !important;
+  font-weight:700;
+  font-style:normal !important;
+}
+
+.vi,
+body,
+.subtitle,
+.hv,
+.meaning,
+.pos,
+.hint,
+.example .vi,
+.gram-note,
+.sentence-content .vi,
+.source-note,
+footer,
+button,
+input,
+select,
+nav a,
+.category-head,
+.section-title p {
+  font-family:"Times New Roman",Times,serif !important;
+}
+
+
+/* ===== KHU VỰC 笔顺 RIÊNG ===== */
+.stroke-panel{background:#fff;border:1px solid var(--line);border-radius:24px;padding:20px;box-shadow:var(--shadow)}
+.stroke-search{width:100%;border:1px solid #dcd5cc;border-radius:15px;padding:13px 16px;background:#fff;outline:none;margin:10px 0 14px;font-family:"Times New Roman",Times,serif}
+.stroke-word-list{display:flex;flex-wrap:wrap;gap:9px;margin-bottom:16px}
+.stroke-word-btn{border:1px solid #cfdde4;background:#eef7fb;color:#2b586d;border-radius:999px;padding:8px 14px;cursor:pointer;font-size:18px;font-family:"KaiTi","STKaiti","Kaiti SC","楷体",serif}
+.stroke-word-btn:hover,.stroke-word-btn.active{background:#ffd9e2;border-color:#e5a9b9}
+#strokeWordTitle{text-align:center;font-family:"KaiTi","STKaiti","Kaiti SC","楷体",serif;font-size:38px;color:#285574;margin:10px 0 2px}
+#strokeWordPinyin{text-align:center;font-family:"Heiti SC","STHeiti","PingFang SC","Microsoft YaHei",Arial,sans-serif;font-weight:700;color:#1b7a8c;font-size:20px;margin-bottom:14px}
+#strokeTargets{display:flex;flex-wrap:wrap;justify-content:center;gap:14px;margin:14px 0}
+.stroke-char-box{width:210px;min-height:250px;background:#fff;border:2px dashed #ccd7dd;border-radius:18px;padding:10px;text-align:center}
+.stroke-char-label{font-family:"KaiTi","STKaiti","Kaiti SC","楷体",serif;font-size:28px;margin-bottom:6px}
+.stroke-canvas{width:190px;height:190px;margin:auto;background:
+linear-gradient(90deg,transparent 49.6%,#e8e2db 49.8%,#e8e2db 50.2%,transparent 50.4%),
+linear-gradient(transparent 49.6%,#e8e2db 49.8%,#e8e2db 50.2%,transparent 50.4%),#fff;
+border:1px solid #dadfe3;border-radius:10px}
+.stroke-actions{text-align:center;margin-top:12px}
+.stroke-actions button{margin:5px;border:none;border-radius:999px;padding:10px 16px;font-weight:700;cursor:pointer}
+.stroke-actions .all{background:#314b5d;color:white}
+.stroke-actions .quiz{background:#5f8d70;color:white}
+.stroke-actions .reset{background:#eee8e1;color:#444}
+.stroke-tip{background:#fff5d9;border-left:5px solid #efbf4e;border-radius:12px;padding:12px 14px;margin-bottom:14px;font-family:"Times New Roman",Times,serif}
+@media(max-width:650px){.stroke-char-box{width:170px;min-height:210px}.stroke-canvas{width:150px;height:150px}}
+
+</style>
+</head>
+<body>
+<header class="wrap">
+  <div class="hero">
+    <span class="eyebrow">HSK 1 · 第7课 · 时间与生活</span>
+    <h1><span class="cn">时间与生活</span><br>Thời gian & Cuộc sống</h1>
+    <p class="subtitle">Bộ học tương tác gồm thẻ từ, phát âm Mandarin, thứ tự nét 笔顺, ngữ pháp thời gian – thời lượng, mẫu câu bấm mở pinyin & nghĩa, và bài điền từ xáo đáp án.</p>
+    <div class="quickstats">
+      <span class="pill">🃏 48 mục từ</span><span class="pill">🔊 Nghe từng từ & ví dụ</span><span class="pill">✍️ 笔顺 từng chữ Hán</span><span class="pill">🧩 Bài tập tự chấm</span>
+    </div>
+  </div>
+</header>
+<nav><div class="wrap"><a href="#vocab">1. Từ vựng</a><a href="#strokes">2. 笔顺</a><a href="#grammar">3. Ngữ pháp</a><a href="#sentences">4. Mẫu câu</a><a href="#exercise">5. Bài tập</a><a href="#guide">Hướng dẫn</a></div></nav>
+<main class="wrap">
+<section id="vocab">
+  <div class="section-title"><div class="num">1</div><div><h2><span class="cn">词汇</span> · Từ đã học</h2><p>Nhấp vào thẻ để lật xem pinyin, âm Hán Việt, nghĩa, từ tính và ví dụ. Nút 🔊 phát âm riêng từng từ.</p></div></div>
+  <div class="toolbar">
+    <div class="searchbox"><span>🔎</span><input id="search" placeholder="Tìm: 汉字 / pinyin / nghĩa / âm Hán Việt..." autocomplete="off"></div>
+    <select id="catFilter" aria-label="Lọc nhóm"><option value="all">Tất cả nhóm</option></select>
+    <select id="voiceSelect" aria-label="Chọn giọng Mandarin"><option>Đang tải giọng Mandarin…</option></select>
+  </div>
+  <div id="vocabRoot"></div>
+</section>
+
+<section id="strokes">
+  <div class="section-title">
+    <div class="num">2</div>
+    <div>
+      <h2><span class="cn">笔顺</span> · Hoạt nét theo từ/cụm từ</h2>
+      <p>Chọn nguyên từ/cụm từ để xem từng chữ viết cạnh nhau, dễ học giống các bài trước.</p>
+    </div>
+  </div>
+  <div class="stroke-panel">
+    <div class="stroke-tip">
+      Chọn một từ như <b class="zh">起床、吃早饭、电影院、看医生</b>. 
+      Bấm <b>✍️ Viết cả từ/cụm</b> để chạy lần lượt; bấm <b>🎯 Luyện từng chữ</b> để tự viết.
+    </div>
+    <input id="strokeSearchBox" class="stroke-search" placeholder="🔎 Tìm từ/cụm từ theo chữ Hán hoặc pinyin...">
+    <div id="strokeWordList" class="stroke-word-list"></div>
+    <div id="strokeWordTitle"></div>
+    <div id="strokeWordPinyin"></div>
+    <div id="strokeTargets"></div>
+    <div class="stroke-actions">
+      <button class="all" id="animateStrokeWord">✍️ Viết cả từ/cụm</button>
+      <button class="quiz" id="quizStrokeWord">🎯 Luyện từng chữ</button>
+      <button class="reset" id="resetStrokeWord">↻ Làm lại</button>
+    </div>
+  </div>
+
+<section id="grammar">
+  <div class="section-title"><div class="num">3</div><div><h2><span class="cn">语法</span> · Ngữ pháp trọng tâm</h2><p>Ba phần theo nội dung bài: nói giờ, nói thời lượng và cấu trúc 后.</p></div></div>
+  <div class="grammar-grid">
+    <article class="grammar">
+      <h3>① Diễn tả thời gian <span class="zh">时间</span></h3>
+      <div class="formula"><span class="zh">现在几点？</span> → Bây giờ mấy giờ?</div>
+      <div class="formula orange"><span class="zh">Thời gian + 点 + (分) + V</span></div>
+      <p class="gram-note"><b>点</b> dùng cho <b>mốc giờ</b>; <b>分</b> dùng cho số phút của mốc giờ. Thành phần chỉ thời gian thường đứng <b>trước động từ</b>.</p>
+      <div class="time-demo">
+        <div class="time-chip"><b>八点</b>8:00 · giờ đúng</div>
+        <div class="time-chip"><b>八点半</b>8:30 · giờ rưỡi</div>
+        <div class="time-chip"><b>八点一刻</b>8:15 · hơn 1 khắc</div>
+        <div class="time-chip"><b>差一刻九点</b>8:45 · kém 1 khắc 9 giờ</div>
+        <div class="time-chip"><b>七点四十分</b>7:40</div>
+        <div class="time-chip"><b>我七点半起床。</b>7:30 tôi thức dậy</div>
+      </div>
+      <div class="compare"><div><strong>点</strong><span>mốc giờ → 八点</span></div><div><strong>分</strong><span>phút của mốc giờ → 八点十分</span></div></div>
+    </article>
+
+    <article class="grammar">
+      <h3>② Diễn tả thời lượng <span class="zh">时量</span></h3>
+      <div class="formula green"><span class="zh">S + V + 了 + thời lượng</span></div>
+      <p class="gram-note"><b>小时 / 分钟 / 一刻钟 / 半个小时</b> là khoảng thời gian kéo dài bao lâu.</p>
+      <div class="compare">
+        <div><strong>一个小时</strong><span>1 giờ</span></div>
+        <div><strong>一个半小时</strong><span>1 tiếng rưỡi</span></div>
+        <div><strong>十五分钟 = 一刻钟</strong><span>15 phút</span></div>
+        <div><strong>三十分钟 = 半个小时</strong><span>30 phút</span></div>
+        <div><strong>四十五分钟</strong><span>45 phút</span></div>
+      </div>
+      <div class="formula"><span class="zh">我学了一个小时。</span><br><small>Wǒ xué le yí ge xiǎoshí. · Tôi đã học một tiếng.</small></div>
+      <p class="gram-note">Nhớ phân biệt: <b>八点</b> = 8 giờ (mốc), còn <b>八个小时</b> = 8 tiếng (thời lượng).</p>
+    </article>
+
+    <article class="grammar">
+      <h3>③ <span class="zh">……后 / ……以后</span> · sau khi / sau…</h3>
+      <div class="formula orange"><span class="zh">Khoảng thời gian + 后 + V</span></div>
+      <div class="compare">
+        <div><strong>十五分钟后下课。</strong><span>15 phút sau tan học.</span></div>
+        <div><strong>我四十分钟后下班。</strong><span>40 phút sau tôi tan làm.</span></div>
+        <div><strong>我五分钟后吃饭。</strong><span>5 phút sau tôi ăn cơm.</span></div>
+      </div>
+      <div class="formula green"><span class="zh">V + 后 / V + 以后 + …</span></div>
+      <p class="gram-note"><span class="zh">下课后我回家。</span> = Sau khi tan học tôi về nhà.<br><span class="zh">吃饭以后看电视。</span> = Ăn cơm xong thì xem TV.</p>
+    </article>
+  </div>
+</section>
+
+<section id="sentences">
+  <div class="section-title"><div class="num">4</div><div><h2><span class="cn">句型</span> · Mẫu câu</h2><p>Bấm vào từng câu để hiện pinyin và nghĩa tiếng Việt. Có nút 🔊 để luyện nghe.</p></div></div>
+  <div id="sentenceRoot" class="sentence-list"></div>
+</section>
+
+<section id="exercise">
+  <div class="section-title"><div class="num">5</div><div><h2><span class="cn">练习</span> · Điền từ</h2><p>Đáp án trong ngân hàng từ được xáo ngẫu nhiên mỗi lần tải trang hoặc bấm “Xáo lại”.</p></div></div>
+  <div class="exercise">
+    <h3 style="margin-top:0">Chọn từ phù hợp điền vào chỗ trống</h3>
+    <p style="color:#687079;margin-top:-3px">Mẹo: nhấp một ô trống trước, sau đó nhấp từ trong ngân hàng để điền nhanh.</p>
+    <div id="bank" class="bank"></div>
+    <div id="questions" class="q-list"></div>
+    <div class="ex-actions"><button class="mainbtn" id="checkBtn">✓ Kiểm tra</button><button class="mainbtn alt" id="shuffleBtn">⤨ Xáo lại đáp án</button><button class="mainbtn alt" id="resetBtn">↺ Làm lại</button><span id="score"></span></div>
+  </div>
+</section>
+
+<section id="guide">
+  <div class="source-note">
+    <b>🔊 Phát âm:</b> file dùng công cụ giọng nói của trình duyệt và ưu tiên giọng <b>zh-CN / Mandarin</b>. Nếu máy có nhiều giọng, chọn giọng Trung Quốc chuẩn trong ô “giọng Mandarin” phía trên.<br>
+    <b>✍️ 笔顺:</b> bấm “笔顺” trên thẻ từ. Hoạt nét sử dụng Hanzi Writer và dữ liệu chữ Hán tải từ CDN; vì vậy cần kết nối Internet khi mở phần hoạt nét lần đầu.
+  </div>
+</section>
+</main>
+<footer><b>Tiếng Trung Minxian (Minxian.chinese) | Zalo: 0833312711</b></footer>
+
+<dialog id="strokeDialog">
+  <div class="modal-head"><span>✍️</span><span id="modalWord" class="modal-word"></span><button class="close" id="closeModal" aria-label="Đóng">×</button></div>
+  <div class="modal-body">
+    <div id="strokeOffline" class="stroke-offline">Không tải được thư viện 笔顺. Hãy kiểm tra kết nối Internet rồi mở lại phần này.</div>
+    <p class="stroke-help">Mỗi chữ trong cụm từ được tách riêng. Bấm <b>▶ Hoạt nét</b> để xem đúng thứ tự nét; bấm <b>练习</b> để tự viết theo nét gợi ý.</p>
+    <div id="writers" class="writers"></div>
+  </div>
+</dialog>
+
+<script src="https://cdn.jsdelivr.net/npm/hanzi-writer@3.7.3/dist/hanzi-writer.min.js"></script>
+<script>
+const vocab = [
+ {w:'早上',p:'zǎoshang',hv:'tảo thượng',m:'buổi sáng (thường là sáng sớm)',pos:'từ chỉ thời gian',e:'🌅',cat:'Khoảng thời gian',ex:'我早上七点起床。',ep:'Wǒ zǎoshang qī diǎn qǐchuáng.',ev:'Tôi thức dậy lúc 7 giờ sáng.'},
+ {w:'上午',p:'shàngwǔ',hv:'thượng ngọ',m:'buổi sáng (khoảng trước trưa)',pos:'từ chỉ thời gian',e:'☀️',cat:'Khoảng thời gian',ex:'我上午上课。',ep:'Wǒ shàngwǔ shàngkè.',ev:'Buổi sáng tôi lên lớp.'},
+ {w:'中午',p:'zhōngwǔ',hv:'trung ngọ',m:'buổi trưa',pos:'từ chỉ thời gian',e:'🍚',cat:'Khoảng thời gian',ex:'我中午吃午饭。',ep:'Wǒ zhōngwǔ chī wǔfàn.',ev:'Buổi trưa tôi ăn cơm trưa.'},
+ {w:'下午',p:'xiàwǔ',hv:'hạ ngọ',m:'buổi chiều',pos:'từ chỉ thời gian',e:'🌤️',cat:'Khoảng thời gian',ex:'我下午两点上课。',ep:'Wǒ xiàwǔ liǎng diǎn shàngkè.',ev:'Tôi lên lớp lúc 2 giờ chiều.'},
+ {w:'晚上',p:'wǎnshang',hv:'vãn thượng',m:'buổi tối',pos:'từ chỉ thời gian',e:'🌙',cat:'Khoảng thời gian',ex:'我晚上八点吃晚饭。',ep:'Wǒ wǎnshang bā diǎn chī wǎnfàn.',ev:'Tôi ăn tối lúc 8 giờ.'},
+ {w:'半夜',p:'bànyè',hv:'bán dạ',m:'nửa đêm, đêm khuya',pos:'từ chỉ thời gian',e:'🕛',cat:'Khoảng thời gian',ex:'半夜十二点，我还没睡觉。',ep:'Bànyè shí’èr diǎn, wǒ hái méi shuìjiào.',ev:'12 giờ đêm tôi vẫn chưa ngủ.'},
+ {w:'熬夜',p:'áoyè',hv:'ngao dạ',m:'thức khuya, thức đêm',pos:'động từ',e:'🦉',cat:'Khoảng thời gian',ex:'不要熬夜。',ep:'Bú yào áoyè.',ev:'Đừng thức khuya.'},
+
+ {w:'点',p:'diǎn',hv:'điểm',m:'giờ (mốc thời gian)',pos:'lượng từ / đơn vị giờ',e:'🕗',cat:'Giờ & thời lượng',ex:'现在八点。',ep:'Xiànzài bā diǎn.',ev:'Bây giờ là 8 giờ.'},
+ {w:'分',p:'fēn',hv:'phân',m:'phút (khi nói mốc giờ)',pos:'đơn vị thời gian',e:'⏱️',cat:'Giờ & thời lượng',ex:'现在七点四十分。',ep:'Xiànzài qī diǎn sìshí fēn.',ev:'Bây giờ là 7 giờ 40 phút.'},
+ {w:'小时',p:'xiǎoshí',hv:'tiểu thời',m:'tiếng, giờ (thời lượng)',pos:'danh từ / đơn vị thời lượng',e:'⌛',cat:'Giờ & thời lượng',ex:'我学了一个小时。',ep:'Wǒ xué le yí ge xiǎoshí.',ev:'Tôi đã học một tiếng.'},
+ {w:'分钟',p:'fēnzhōng',hv:'phân chung',m:'phút (thời lượng)',pos:'danh từ / đơn vị thời lượng',e:'⏳',cat:'Giờ & thời lượng',ex:'我等五分钟。',ep:'Wǒ děng wǔ fēnzhōng.',ev:'Tôi đợi 5 phút.'},
+ {w:'刻',p:'kè',hv:'khắc',m:'khắc; 15 phút',pos:'đơn vị thời gian',e:'🕒',cat:'Giờ & thời lượng',ex:'现在八点一刻。',ep:'Xiànzài bā diǎn yí kè.',ev:'Bây giờ là 8 giờ 15.'},
+ {w:'半',p:'bàn',hv:'bán',m:'nửa, rưỡi',pos:'số từ',e:'🌓',cat:'Giờ & thời lượng',ex:'现在八点半。',ep:'Xiànzài bā diǎn bàn.',ev:'Bây giờ là 8 giờ rưỡi.'},
+
+ {w:'一节课',p:'yì jié kè',hv:'nhất tiết khóa',m:'một tiết học',pos:'cụm lượng từ',e:'📘',cat:'Trường học & sinh hoạt',ex:'我今天有三节课。',ep:'Wǒ jīntiān yǒu sān jié kè.',ev:'Hôm nay tôi có ba tiết học.'},
+ {w:'一门课',p:'yì mén kè',hv:'nhất môn khóa',m:'một môn học',pos:'cụm lượng từ',e:'📚',cat:'Trường học & sinh hoạt',ex:'这个学期我有五门课。',ep:'Zhège xuéqī wǒ yǒu wǔ mén kè.',ev:'Học kỳ này tôi có năm môn học.'},
+ {w:'第一课',p:'dì yī kè',hv:'đệ nhất khóa',m:'bài 1 / bài học thứ nhất',pos:'cụm danh từ',e:'1️⃣',cat:'Trường học & sinh hoạt',ex:'我们今天学第一课。',ep:'Wǒmen jīntiān xué dì-yī kè.',ev:'Hôm nay chúng ta học bài 1.'},
+ {w:'起床',p:'qǐchuáng',hv:'khởi sàng',m:'thức dậy, ra khỏi giường',pos:'động từ',e:'🛏️',cat:'Trường học & sinh hoạt',ex:'我七点起床。',ep:'Wǒ qī diǎn qǐchuáng.',ev:'Tôi thức dậy lúc 7 giờ.'},
+ {w:'吃早饭',p:'chī zǎofàn',hv:'ngật tảo phạn',m:'ăn sáng',pos:'cụm động từ',e:'🥪',cat:'Trường học & sinh hoạt',ex:'我七点半吃早饭。',ep:'Wǒ qī diǎn bàn chī zǎofàn.',ev:'Tôi ăn sáng lúc 7 giờ rưỡi.'},
+ {w:'吃午饭',p:'chī wǔfàn',hv:'ngật ngọ phạn',m:'ăn trưa',pos:'cụm động từ',e:'🍱',cat:'Trường học & sinh hoạt',ex:'我十二点吃午饭。',ep:'Wǒ shí’èr diǎn chī wǔfàn.',ev:'Tôi ăn trưa lúc 12 giờ.'},
+ {w:'吃晚饭',p:'chī wǎnfàn',hv:'ngật vãn phạn',m:'ăn tối',pos:'cụm động từ',e:'🍲',cat:'Trường học & sinh hoạt',ex:'我晚上八点吃晚饭。',ep:'Wǒ wǎnshang bā diǎn chī wǎnfàn.',ev:'Tôi ăn tối lúc 8 giờ.'},
+ {w:'上学',p:'shàngxué',hv:'thượng học',m:'đi học',pos:'động từ',e:'🎒',cat:'Trường học & sinh hoạt',ex:'我八点上学。',ep:'Wǒ bā diǎn shàngxué.',ev:'Tôi đi học lúc 8 giờ.'},
+ {w:'上课',p:'shàngkè',hv:'thượng khóa',m:'lên lớp, học tiết học',pos:'động từ',e:'🏫',cat:'Trường học & sinh hoạt',ex:'我九点上课。',ep:'Wǒ jiǔ diǎn shàngkè.',ev:'Tôi lên lớp lúc 9 giờ.'},
+ {w:'下课',p:'xiàkè',hv:'hạ khóa',m:'tan tiết, hết giờ học',pos:'động từ',e:'🔔',cat:'Trường học & sinh hoạt',ex:'我们十点下课。',ep:'Wǒmen shí diǎn xiàkè.',ev:'10 giờ chúng tôi tan tiết.'},
+ {w:'放学',p:'fàngxué',hv:'phóng học',m:'tan học',pos:'động từ',e:'🚸',cat:'Trường học & sinh hoạt',ex:'我下午五点放学。',ep:'Wǒ xiàwǔ wǔ diǎn fàngxué.',ev:'Tôi tan học lúc 5 giờ chiều.'},
+ {w:'回家',p:'huí jiā',hv:'hồi gia',m:'về nhà',pos:'cụm động từ',e:'🏠',cat:'Trường học & sinh hoạt',ex:'放学后我回家。',ep:'Fàngxué hòu wǒ huí jiā.',ev:'Sau khi tan học tôi về nhà.'},
+ {w:'做作业',p:'zuò zuòyè',hv:'tố tác nghiệp',m:'làm bài tập về nhà',pos:'cụm động từ',e:'✏️',cat:'Trường học & sinh hoạt',ex:'我晚上做作业。',ep:'Wǒ wǎnshang zuò zuòyè.',ev:'Buổi tối tôi làm bài tập.'},
+ {w:'看电视',p:'kàn diànshì',hv:'khán điện thị',m:'xem tivi',pos:'cụm động từ',e:'📺',cat:'Trường học & sinh hoạt',ex:'我们看电视吧。',ep:'Wǒmen kàn diànshì ba.',ev:'Chúng ta xem tivi nhé.'},
+ {w:'看电影',p:'kàn diànyǐng',hv:'khán điện ảnh',m:'xem phim',pos:'cụm động từ',e:'🎬',cat:'Trường học & sinh hoạt',ex:'我喜欢看电影。',ep:'Wǒ xǐhuan kàn diànyǐng.',ev:'Tôi thích xem phim.'},
+ {w:'睡觉',p:'shuìjiào',hv:'thụy giác',m:'ngủ',pos:'động từ',e:'😴',cat:'Trường học & sinh hoạt',ex:'我十点半睡觉。',ep:'Wǒ shí diǎn bàn shuìjiào.',ev:'Tôi ngủ lúc 10 giờ rưỡi.'},
+
+ {w:'电影院',p:'diànyǐngyuàn',hv:'điện ảnh viện',m:'rạp chiếu phim',pos:'danh từ',e:'🎞️',cat:'Địa điểm & sức khỏe',ex:'我们去电影院看电影吧。',ep:'Wǒmen qù diànyǐngyuàn kàn diànyǐng ba.',ev:'Chúng ta đi rạp xem phim nhé.'},
+ {w:'银行',p:'yínháng',hv:'ngân hàng',m:'ngân hàng',pos:'danh từ',e:'🏦',cat:'Địa điểm & sức khỏe',ex:'我去银行。',ep:'Wǒ qù yínháng.',ev:'Tôi đi ngân hàng.'},
+ {w:'医院',p:'yīyuàn',hv:'y viện',m:'bệnh viện',pos:'danh từ',e:'🏥',cat:'Địa điểm & sức khỏe',ex:'我生病了，我要去医院。',ep:'Wǒ shēngbìng le, wǒ yào qù yīyuàn.',ev:'Tôi bị ốm rồi, tôi muốn đi bệnh viện.'},
+ {w:'医生',p:'yīshēng',hv:'y sinh',m:'bác sĩ',pos:'danh từ',e:'🧑‍⚕️',cat:'Địa điểm & sức khỏe',ex:'他是医生。',ep:'Tā shì yīshēng.',ev:'Anh ấy là bác sĩ.'},
+ {w:'病人',p:'bìngrén',hv:'bệnh nhân',m:'bệnh nhân',pos:'danh từ',e:'🤒',cat:'Địa điểm & sức khỏe',ex:'医生在看病人。',ep:'Yīshēng zài kàn bìngrén.',ev:'Bác sĩ đang khám cho bệnh nhân.'},
+ {w:'生病',p:'shēngbìng',hv:'sinh bệnh',m:'bị bệnh, bị ốm',pos:'động từ',e:'🤧',cat:'Địa điểm & sức khỏe',ex:'我生病了。',ep:'Wǒ shēngbìng le.',ev:'Tôi bị ốm rồi.'},
+ {w:'看病',p:'kànbìng',hv:'khán bệnh',m:'đi khám bệnh / khám bệnh',pos:'động từ',e:'🩺',cat:'Địa điểm & sức khỏe',ex:'我去医院看病。',ep:'Wǒ qù yīyuàn kànbìng.',ev:'Tôi đến bệnh viện khám bệnh.'},
+ {w:'看医生',p:'kàn yīshēng',hv:'khán y sinh',m:'đi gặp bác sĩ, đi khám bác sĩ',pos:'cụm động từ',e:'👨‍⚕️',cat:'Địa điểm & sức khỏe',ex:'我坐出租车去看医生。',ep:'Wǒ zuò chūzūchē qù kàn yīshēng.',ev:'Tôi đi taxi để gặp bác sĩ.'},
+
+ {w:'菜',p:'cài',hv:'thái',m:'món ăn; rau',pos:'danh từ',e:'🥗',cat:'Rau & đồ ăn',ex:'这个菜很好吃。',ep:'Zhège cài hěn hǎochī.',ev:'Món này rất ngon.'},
+ {w:'青菜',p:'qīngcài',hv:'thanh thái',m:'rau xanh',pos:'danh từ',e:'🥬',cat:'Rau & đồ ăn',ex:'我喜欢吃青菜。',ep:'Wǒ xǐhuan chī qīngcài.',ev:'Tôi thích ăn rau xanh.'},
+ {w:'白菜',p:'báicài',hv:'bạch thái',m:'cải thảo',pos:'danh từ',e:'🥬',cat:'Rau & đồ ăn',ex:'我买白菜。',ep:'Wǒ mǎi báicài.',ev:'Tôi mua cải thảo.'},
+ {w:'菠菜',p:'bōcài',hv:'ba thái',m:'rau bina / cải bó xôi',pos:'danh từ',e:'🌿',cat:'Rau & đồ ăn',ex:'我喜欢吃菠菜。',ep:'Wǒ xǐhuan chī bōcài.',ev:'Tôi thích ăn rau bina.'},
+ {w:'生菜',p:'shēngcài',hv:'sinh thái',m:'xà lách',pos:'danh từ',e:'🥗',cat:'Rau & đồ ăn',ex:'我吃生菜。',ep:'Wǒ chī shēngcài.',ev:'Tôi ăn xà lách.'},
+
+ {w:'看见',p:'kànjiàn',hv:'khán kiến',m:'nhìn thấy',pos:'động từ',e:'👀',cat:'Gặp gỡ & sự việc',ex:'我看见老师了。',ep:'Wǒ kànjiàn lǎoshī le.',ev:'Tôi nhìn thấy giáo viên rồi.'},
+ {w:'见面',p:'jiànmiàn',hv:'kiến diện',m:'gặp mặt',pos:'động từ',e:'🤝',cat:'Gặp gỡ & sự việc',ex:'我们明天见面。',ep:'Wǒmen míngtiān jiànmiàn.',ev:'Ngày mai chúng ta gặp nhau.'},
+ {w:'明天见',p:'míngtiān jiàn',hv:'minh thiên kiến',m:'hẹn gặp ngày mai',pos:'mẫu câu chào tạm biệt',e:'👋',cat:'Gặp gỡ & sự việc',ex:'老师，明天见！',ep:'Lǎoshī, míngtiān jiàn!',ev:'Thầy/cô, hẹn gặp ngày mai!'},
+ {w:'事',p:'shì',hv:'sự',m:'việc, chuyện, sự việc',pos:'danh từ',e:'📌',cat:'Gặp gỡ & sự việc',ex:'我今天有事。',ep:'Wǒ jīntiān yǒu shì.',ev:'Hôm nay tôi có việc.'},
+ {w:'事情',p:'shìqing',hv:'sự tình',m:'sự việc, chuyện',pos:'danh từ',e:'📝',cat:'Gặp gỡ & sự việc',ex:'我想和你说一件事情。',ep:'Wǒ xiǎng hé nǐ shuō yí jiàn shìqing.',ev:'Tôi muốn nói với bạn một chuyện.'},
+ {w:'件',p:'jiàn',hv:'kiện',m:'lượng từ cho sự việc, quần áo, đồ vật...',pos:'lượng từ',e:'🧩',cat:'Gặp gỡ & sự việc',ex:'我想和你说一件事。',ep:'Wǒ xiǎng hé nǐ shuō yí jiàn shì.',ev:'Tôi muốn nói với bạn một chuyện.'}
+];
+
+const sentences = [
+ ['现在几点？','Xiànzài jǐ diǎn?','Bây giờ mấy giờ?'],
+ ['你几点起床？','Nǐ jǐ diǎn qǐchuáng?','Bạn mấy giờ thức dậy?'],
+ ['你几点上班 / 下班 / 上学 / 上课 / 放学 / 下课？','Nǐ jǐ diǎn shàngbān / xiàbān / shàngxué / shàngkè / fàngxué / xiàkè?','Bạn mấy giờ đi làm / tan làm / đi học / lên lớp / tan học / tan tiết?'],
+ ['我明天下午两点上课。','Wǒ míngtiān xiàwǔ liǎng diǎn shàngkè.','Ngày mai tôi lên lớp lúc 2 giờ chiều.'],
+ ['我今天有三节课。','Wǒ jīntiān yǒu sān jié kè.','Hôm nay tôi có ba tiết học.'],
+ ['这个学期我有五门课。','Zhège xuéqī wǒ yǒu wǔ mén kè.','Học kỳ này tôi có năm môn học.'],
+ ['我们看电视吧。','Wǒmen kàn diànshì ba.','Chúng ta xem tivi nhé.'],
+ ['我们去电影院看电影吧。','Wǒmen qù diànyǐngyuàn kàn diànyǐng ba.','Chúng ta đi rạp xem phim nhé.'],
+ ['我生病了，我要去医院。','Wǒ shēngbìng le, wǒ yào qù yīyuàn.','Tôi bị ốm rồi, tôi muốn đi bệnh viện.'],
+ ['你怎么去医院？','Nǐ zěnme qù yīyuàn?','Bạn đi bệnh viện bằng cách nào?'],
+ ['我坐出租车去医院看病 / 看医生。','Wǒ zuò chūzūchē qù yīyuàn kànbìng / kàn yīshēng.','Tôi đi taxi đến bệnh viện khám bệnh / gặp bác sĩ.'],
+ ['我学了一个小时。','Wǒ xué le yí ge xiǎoshí.','Tôi đã học một tiếng.'],
+ ['我学了一个半小时。','Wǒ xué le yí ge bàn xiǎoshí.','Tôi đã học một tiếng rưỡi.'],
+ ['我们十五分钟后下课。','Wǒmen shíwǔ fēnzhōng hòu xiàkè.','15 phút sau chúng tôi tan tiết.'],
+ ['我四十分钟后下班。','Wǒ sìshí fēnzhōng hòu xiàbān.','40 phút sau tôi tan làm.'],
+ ['我五分钟后吃饭。','Wǒ wǔ fēnzhōng hòu chīfàn.','5 phút sau tôi ăn cơm.'],
+ ['我今天有事。','Wǒ jīntiān yǒu shì.','Hôm nay tôi có việc.'],
+ ['你今天有什么事？','Nǐ jīntiān yǒu shénme shì?','Hôm nay bạn có việc gì?'],
+ ['我想和你说一件事。','Wǒ xiǎng hé nǐ shuō yí jiàn shì.','Tôi muốn nói với bạn một chuyện.'],
+ ['这件事你知道吗？','Zhè jiàn shì nǐ zhīdào ma?','Chuyện này bạn có biết không?']
+];
+
+const questions = [
+ {html:'我早上七点 <b>___</b>。',a:'起床'},
+ {html:'我晚上八点 <b>___</b>。',a:'吃晚饭'},
+ {html:'现在八点 <b>___</b>。',a:'半'},
+ {html:'现在八点 <b>___</b>。',a:'一刻',accept:['一刻','刻']},
+ {html:'我学了一个 <b>___</b>。',a:'小时'},
+ {html:'十五 <b>___</b> 后下课。',a:'分钟'},
+ {html:'我生病了，我要去 <b>___</b>。',a:'医院'},
+ {html:'我去医院 <b>___</b>。',a:'看病'},
+ {html:'放学后我 <b>___</b>。',a:'回家'},
+ {html:'我们去 <b>___</b> 看电影吧。',a:'电影院'},
+ {html:'老师，<b>___</b>！',a:'明天见'},
+ {html:'我想和你说一 <b>___</b> 事。',a:'件'},
+ {html:'我喜欢吃 <b>___</b>。',a:'青菜'},
+ {html:'我下午两点 <b>___</b>。',a:'上课'},
+ {html:'这个学期我有 <b>___</b>。',a:'一门课'}
+];
+
+const cats=[...new Set(vocab.map(v=>v.cat))];
+const root=document.getElementById('vocabRoot');
+const search=document.getElementById('search');
+const catFilter=document.getElementById('catFilter');
+cats.forEach(c=>catFilter.insertAdjacentHTML('beforeend',`<option value="${c}">${c}</option>`));
+
+function cardHTML(v,i){
+ return `<div class="vocab-card" tabindex="0" data-i="${i}" aria-label="Thẻ từ ${v.w}">
+  <div class="card-inner">
+   <div class="card-face card-front">
+    <div class="front-actions"><button class="iconbtn speak-word" data-text="${v.w}" title="Nghe từ">🔊</button></div>
+    <div class="emoji">${v.e}</div><div class="word">${v.w}</div><div class="hint">Nhấp để lật thẻ · 点击翻卡</div>
+   </div>
+   <div class="card-face card-back">
+    <div><div class="pinyin">${v.p}</div><div class="hv">Âm Hán Việt: ${v.hv}</div><div class="meaning">${v.m}</div><span class="pos">${v.pos}</span>
+     <div class="example"><div class="zh">${v.ex}</div><div class="expy py">${v.ep}</div><div class="vi">${v.ev}</div></div>
+    </div>
+    <div class="back-actions"><button class="mini speak-word" data-text="${v.w}">🔊 Từ</button><button class="mini speak-word" data-text="${v.ex}">🔊 Ví dụ</button><button class="mini primary stroke-btn" data-i="${i}">✍️ 笔顺</button></div>
+   </div>
+  </div></div>`;
+}
+
+function norm(s){return (s||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase().replace(/\s+/g,'');}
+function renderVocab(){
+ const q=norm(search.value), f=catFilter.value;
+ const groups={};
+ vocab.forEach((v,i)=>{
+   const hay=norm([v.w,v.p,v.hv,v.m,v.pos,v.ex].join(' '));
+   if((!q||hay.includes(q))&&(f==='all'||v.cat===f)){(groups[v.cat]??=[]).push([v,i]);}
+ });
+ let html='';
+ Object.entries(groups).forEach(([cat,items])=>{
+   html+=`<div class="category"><div class="category-head"><h3>${cat}</h3><span class="tag">${items.length} từ</span></div><div class="grid">${items.map(([v,i])=>cardHTML(v,i)).join('')}</div></div>`;
+ });
+ if(!html) html='<div class="empty">Không tìm thấy từ phù hợp. Hãy thử từ khóa khác.</div>';
+ root.innerHTML=html;
+ bindCards();
+}
+function bindCards(){
+ document.querySelectorAll('.vocab-card').forEach(card=>{
+   const flip=()=>card.classList.toggle('flipped');
+   card.addEventListener('click',e=>{if(!e.target.closest('button')) flip();});
+   card.addEventListener('keydown',e=>{if((e.key==='Enter'||e.key===' ')&&!e.target.closest('button')){e.preventDefault();flip();}});
+ });
+ document.querySelectorAll('.speak-word').forEach(b=>b.addEventListener('click',e=>{e.stopPropagation();speak(b.dataset.text)}));
+ document.querySelectorAll('.stroke-btn').forEach(b=>b.addEventListener('click',e=>{e.stopPropagation();openStroke(+b.dataset.i)}));
+}
+search.addEventListener('input',renderVocab);catFilter.addEventListener('change',renderVocab);renderVocab();
+
+// Speech synthesis - ưu tiên Mandarin zh-CN
+const voiceSelect=document.getElementById('voiceSelect'); let voices=[];
+function loadVoices(){
+ voices=speechSynthesis.getVoices();
+ const zh=voices.filter(v=>/^zh/i.test(v.lang) || /Chinese|Mandarin|中文|普通话|國語|国语/i.test(v.name));
+ const use=zh.length?zh:voices;
+ voiceSelect.innerHTML=use.map((v,i)=>`<option value="${voices.indexOf(v)}">${v.name} · ${v.lang}</option>`).join('') || '<option value="">Giọng zh-CN mặc định</option>';
+ const pri=use.find(v=>/zh-CN/i.test(v.lang)&&/Xiaoxiao|Yunxi|Google|Mandarin|普通话/i.test(v.name)) || use.find(v=>/zh-CN/i.test(v.lang)) || use[0];
+ if(pri) voiceSelect.value=voices.indexOf(pri);
+}
+loadVoices(); if('speechSynthesis' in window) speechSynthesis.onvoiceschanged=loadVoices;
+function speak(text){
+ if(!('speechSynthesis' in window)){alert('Trình duyệt này không hỗ trợ phát âm.');return;}
+ speechSynthesis.cancel(); const u=new SpeechSynthesisUtterance(text); u.lang='zh-CN'; u.rate=.78; u.pitch=1;
+ const idx=Number(voiceSelect.value); if(Number.isInteger(idx)&&voices[idx]) u.voice=voices[idx];
+ speechSynthesis.speak(u);
+}
+
+// Sample sentences
+const sroot=document.getElementById('sentenceRoot');
+sroot.innerHTML=sentences.map((s,i)=>`<details class="sentence"><summary><span class="zh">${s[0]}</span><button class="iconbtn sentence-speak" data-i="${i}" title="Nghe câu">🔊</button><span style="font-size:14px;color:#999">＋</span></summary><div class="sentence-content"><div class="py">${s[1]}</div><div class="vi">${s[2]}</div></div></details>`).join('');
+document.querySelectorAll('.sentence-speak').forEach(b=>b.addEventListener('click',e=>{e.preventDefault();e.stopPropagation();speak(sentences[+b.dataset.i][0])}));
+
+// Exercise
+const bank=document.getElementById('bank'), qroot=document.getElementById('questions'), score=document.getElementById('score'); let activeInput=null;
+function shuffled(a){return [...a].sort(()=>Math.random()-.5)}
+function renderBank(){
+ const answers=[...new Set(questions.map(q=>q.a))];
+ bank.innerHTML=shuffled(answers).map(a=>`<button class="bank-chip" data-a="${a}">${a}</button>`).join('');
+ bank.querySelectorAll('button').forEach(b=>b.addEventListener('click',()=>{if(activeInput){activeInput.value=b.dataset.a; activeInput.focus();}}));
+}
+function renderQuestions(){
+ qroot.innerHTML=questions.map((q,i)=>`<div class="q" data-i="${i}"><div class="q-line"><span class="q-num">${i+1}</span><span class="zh">${q.html.replace('<b>___</b>',`<input class="blank" data-i="${i}" aria-label="Câu ${i+1}">`)}</span></div></div>`).join('');
+ document.querySelectorAll('.blank').forEach(inp=>inp.addEventListener('focus',()=>activeInput=inp));
+ score.textContent='';
+}
+renderBank();renderQuestions();
+document.getElementById('checkBtn').addEventListener('click',()=>{
+ let good=0; questions.forEach((q,i)=>{const inp=document.querySelector(`.blank[data-i="${i}"]`); const box=inp.closest('.q'); const val=inp.value.trim(); const accepted=q.accept||[q.a]; const ok=accepted.includes(val); box.classList.remove('correct','wrong'); box.classList.add(ok?'correct':'wrong'); if(ok)good++;});
+ score.textContent=`${good}/${questions.length} câu đúng`;
+});
+document.getElementById('shuffleBtn').addEventListener('click',renderBank);
+document.getElementById('resetBtn').addEventListener('click',()=>{renderQuestions();renderBank();activeInput=null;});
+
+// Stroke order dialog
+const dialog=document.getElementById('strokeDialog'), writers=document.getElementById('writers'), modalWord=document.getElementById('modalWord'), offline=document.getElementById('strokeOffline');
+document.getElementById('closeModal').addEventListener('click',()=>dialog.close());
+dialog.addEventListener('click',e=>{if(e.target===dialog)dialog.close()});
+function chineseChars(s){return [...s].filter(ch=>/[\u3400-\u9FFF]/.test(ch));}
+function openStroke(i){
+ const v=vocab[i]; modalWord.textContent=`${v.w} · ${v.p}`; writers.innerHTML=''; offline.style.display='none';
+ const chars=chineseChars(v.w); const instances=[];
+ chars.forEach((ch,n)=>{
+  const id=`writer-${Date.now()}-${n}`;
+  const unit=document.createElement('div');unit.className='writer-unit';unit.innerHTML=`<div class="writer-title">${ch}</div><div class="writer-canvas" id="${id}"></div><div class="writer-actions"><button data-act="animate">▶ Hoạt nét</button><button data-act="quiz">练习</button></div>`;writers.appendChild(unit);
+  if(window.HanziWriter){
+    const wr=HanziWriter.create(id,ch,{width:140,height:140,padding:8,showOutline:true,showCharacter:false,strokeAnimationSpeed:1.15,delayBetweenStrokes:180,charDataLoader:(char,onComplete,onError)=>{fetch(`https://cdn.jsdelivr.net/npm/hanzi-writer-data@2.0/${encodeURIComponent(char)}.json`).then(r=>{if(!r.ok)throw new Error('data');return r.json()}).then(onComplete).catch(onError)}});
+    instances.push(wr); wr.animateCharacter();
+    unit.querySelector('[data-act="animate"]').onclick=()=>wr.animateCharacter();
+    unit.querySelector('[data-act="quiz"]').onclick=()=>wr.quiz({showHintAfterMisses:1,highlightOnComplete:true});
+  } else {
+    unit.querySelector('.writer-canvas').innerHTML=`<div class="writer-fallback">${ch}</div>`;
+    offline.style.display='block';
+  }
+ });
+ if(typeof dialog.showModal==='function')dialog.showModal();else dialog.setAttribute('open','');
+}
+
+// ===== KHU VỰC 笔顺 RIÊNG =====
+let strokeCurrentWord = '';
+let strokeCurrentPinyin = '';
+let strokeWriters = [];
+
+const strokeSearchBox = document.getElementById('strokeSearchBox');
+const strokeWordList = document.getElementById('strokeWordList');
+const strokeWordTitle = document.getElementById('strokeWordTitle');
+const strokeWordPinyin = document.getElementById('strokeWordPinyin');
+const strokeTargets = document.getElementById('strokeTargets');
+
+function renderStrokeButtons(q=''){
+  if(!strokeWordList) return;
+  const k = norm(q);
+  const matched = vocab.filter(v => !k || norm(v.w + ' ' + v.p + ' ' + v.m).includes(k));
+  strokeWordList.innerHTML = matched.map(v =>
+    `<button class="stroke-word-btn ${strokeCurrentWord===v.w?'active':''}" data-word="${v.w}" data-pinyin="${v.p}">${v.w}</button>`
+  ).join('');
+  strokeWordList.querySelectorAll('.stroke-word-btn').forEach(btn=>{
+    btn.onclick = ()=>selectStrokeWord(btn.dataset.word, btn.dataset.pinyin);
+  });
+}
+
+function selectStrokeWord(word,pinyin){
+  strokeCurrentWord = word;
+  strokeCurrentPinyin = pinyin || '';
+  renderStrokeButtons(strokeSearchBox ? strokeSearchBox.value : '');
+  renderStrokeWord();
+}
+
+function renderStrokeWord(){
+  if(!strokeTargets) return;
+  strokeTargets.innerHTML = '';
+  strokeWriters = [];
+  strokeWordTitle.textContent = strokeCurrentWord;
+  strokeWordPinyin.textContent = strokeCurrentPinyin;
+  if(!strokeCurrentWord) return;
+
+  const chars = chineseChars(strokeCurrentWord);
+  chars.forEach((ch,i)=>{
+    const box = document.createElement('div');
+    box.className = 'stroke-char-box';
+    const label = document.createElement('div');
+    label.className = 'stroke-char-label';
+    label.textContent = ch;
+    const canvas = document.createElement('div');
+    canvas.className = 'stroke-canvas';
+    canvas.id = `main-stroke-${Date.now()}-${i}`;
+    box.appendChild(label);
+    box.appendChild(canvas);
+    strokeTargets.appendChild(box);
+
+    if(window.HanziWriter){
+      try{
+        const size = window.innerWidth <= 650 ? 150 : 190;
+        const wr = HanziWriter.create(canvas.id,ch,{
+          width:size,height:size,padding:8,
+          showOutline:true,showCharacter:false,
+          strokeAnimationSpeed:1.05,delayBetweenStrokes:180,
+          charDataLoader:(char,onComplete,onError)=>{
+            fetch(`https://cdn.jsdelivr.net/npm/hanzi-writer-data@2.0/${encodeURIComponent(char)}.json`)
+              .then(r=>{if(!r.ok) throw new Error('data'); return r.json();})
+              .then(onComplete).catch(onError);
+          }
+        });
+        strokeWriters.push(wr);
+      }catch(e){
+        canvas.innerHTML = `<div class="writer-fallback">${ch}</div>`;
+      }
+    }else{
+      canvas.innerHTML = `<div class="writer-fallback">${ch}</div>`;
+    }
+  });
+}
+
+async function animateStrokeWholeWord(){
+  for(const w of strokeWriters){
+    await new Promise(resolve=>w.animateCharacter({onComplete:resolve}));
+    await new Promise(resolve=>setTimeout(resolve,250));
+  }
+}
+
+function quizStrokeWholeWord(){
+  strokeWriters.forEach(w=>w.quiz({showHintAfterMisses:1,highlightOnComplete:true}));
+}
+
+function resetStrokeWholeWord(){
+  if(strokeCurrentWord) renderStrokeWord();
+}
+
+if(strokeSearchBox){
+  strokeSearchBox.addEventListener('input', e=>renderStrokeButtons(e.target.value));
+}
+document.getElementById('animateStrokeWord')?.addEventListener('click', animateStrokeWholeWord);
+document.getElementById('quizStrokeWord')?.addEventListener('click', quizStrokeWholeWord);
+document.getElementById('resetStrokeWord')?.addEventListener('click', resetStrokeWholeWord);
+
+renderStrokeButtons();
+if(vocab.length) selectStrokeWord(vocab[0].w, vocab[0].p);
+
+</script>
+</body>
+</html>
